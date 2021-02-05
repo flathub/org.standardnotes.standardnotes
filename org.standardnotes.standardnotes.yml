@@ -123,9 +123,11 @@ modules:
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
       - npm --offline run bundle
-      - . flatpak-node/electron-builder-arch-args.sh;
-        ./node_modules/.bin/electron-builder --dir --linux dir --
-        $ELECTRON_BUILDER_ARCH_ARGS
+      - npx electron-builder --linux dir --$npm_config_arch
+
+      # Remove unneeded files
+      - rm dist/linux*-unpacked/chrome-sandbox
+
       # Copy the resulting, unpacked directory to /app.
       - 'cp -r dist/linux*-unpacked /app/standardnotes'
 
