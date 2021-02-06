@@ -73,9 +73,6 @@ modules:
         # https://stackoverflow.com/questions/25146976/can-i-get-npm-gyp-to-use-ccache
         CXX: ccache g++
         CC: ccache gcc
-        npm_config_target: 9.2.1
-        # Tell node-pre-gyp that we are building for Electron.
-        npm_config_runtime: electron
       arch:
         # https://github.com/sass/node-sass/issues/3033#issuecomment-763180778
         # The architecture of Electron, see https://electronjs.org/docs/tutorial/support#supported-platforms
