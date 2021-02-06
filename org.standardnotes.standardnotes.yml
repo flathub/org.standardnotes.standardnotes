@@ -175,6 +175,8 @@ modules:
       - generated-sources.json
       # YARN
       - generated-sources.web.json
+      - type: patch
+        path: remove-updater.patch
   - name: start-script
     buildsystem: simple
     build-commands:
