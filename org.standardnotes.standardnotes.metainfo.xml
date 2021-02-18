@@ -33,7 +33,8 @@
   </categories>
 
   <description>
-    <p>(Unofficial)</p>
+    <p><em>(Note: This release is built by a 3rd party from official Standard Notes releases. Standard Notes is 
+      unaffiliated with this Flathub listing.</em></p>
 
     <p>Standard Notes is a simple and private notes app. It syncs your notes securely across all your devices, including
       your Android devices, Windows, iOS, Linux, and Web.</p>
