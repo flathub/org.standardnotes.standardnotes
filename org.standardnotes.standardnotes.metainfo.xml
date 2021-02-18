@@ -3,7 +3,7 @@
   <id>org.standardnotes.standardnotes</id>
 
   <name>Standard Notes</name>
-  <summary>A simple and private place for your notes, thoughts, and life's work</summary>
+  <summary>(Unofficial) A simple and private place for your notes, thoughts, and life's work</summary>
 
   <developer_name>Standard Notes Ltd.</developer_name>
   <agreement type="privacy" version_id="1.0">
@@ -33,6 +33,8 @@
   </categories>
 
   <description>
+    <p>(Unofficial)</p>
+
     <p>Standard Notes is a simple and private notes app. It syncs your notes securely across all your devices, including
       your Android devices, Windows, iOS, Linux, and Web.</p>
 
