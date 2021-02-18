@@ -2,10 +2,10 @@
 <component type="desktop-application">
   <id>org.standardnotes.standardnotes</id>
 
-  <name>Standard Notes</name>
+  <name>Standard Notes (Unofficial)</name>
   <summary>(Unofficial) A simple and private place for your notes, thoughts, and life's work</summary>
 
-  <developer_name>Standard Notes Ltd.</developer_name>
+  <developer_name>proletarius101</developer_name>
   <agreement type="privacy" version_id="1.0">
     <agreement_section>
       <name>What we collect and how we use the collected data</name>
