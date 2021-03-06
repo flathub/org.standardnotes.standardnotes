@@ -11,15 +11,15 @@ sdk-extensions:
 separate-locales: false
 command: start-standardnotes
 finish-args:
-  - '--device=dri'
-  - '--filesystem=xdg-download'
-  - '--filesystem=xdg-documents'
-  - '--filesystem=xdg-run/keyring'
-  - '--share=ipc'
-  - '--share=network'
-  - '--socket=x11'
-  - '--talk-name=org.freedesktop.Notifications'
-  - '--talk-name=org.freedesktop.secrets'
+  - --device=dri
+  - --filesystem=xdg-download
+  - --filesystem=xdg-documents
+  - --filesystem=xdg-run/keyring
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.freedesktop.secrets
 modules:
   - shared-modules/libsecret/libsecret.json
 
@@ -27,16 +27,16 @@ modules:
   - name: python-2.7
     sources:
       - type: archive
-        url: 'https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz'
+        url: https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz
         sha256: b62c0e7937551d0cc02b8fd5cb0f544f9405bafc9a54d3808ed4594812edef43
     config-opts:
-      - '--enable-shared'
-      - '--with-ensurepip=yes'
-      - '--with-system-expat'
-      - '--with-system-ffi'
-      - '--enable-loadable-sqlite-extensions'
-      - '--with-dbmliborder=gdbm'
-      - '--enable-unicode=ucs4'
+      - --enable-shared
+      - --with-ensurepip=yes
+      - --with-system-expat
+      - --with-system-ffi
+      - --enable-loadable-sqlite-extensions
+      - --with-dbmliborder=gdbm
+      - --enable-unicode=ucs4
     post-install:
       - chmod 644 $FLATPAK_DEST/lib/libpython2.7.so.1.0
     cleanup:
@@ -45,7 +45,7 @@ modules:
   - name: yarn
     buildsystem: simple
     build-commands:
-      - 'cp -a * /app'
+      - cp -a * /app
     # Only used for building, so clean it up afterwards.
     cleanup:
       - '*'
@@ -55,13 +55,13 @@ modules:
         sha256: 7e433d4a77e2c79e6a7ae4866782608a8e8bcad3ec6783580577c59538381a6e
         x-checker-data:
           type: anitya
-          'project-id': 13363
+          project-id: 13363
           url-template: https://github.com/yarnpkg/yarn/releases/download/$version/yarn-$version.tar.gz
   - name: standardnotes
     buildsystem: simple
     build-options:
       # Add the node bin directory.
-      append-path: '/usr/lib/sdk/node14/bin:/app/yarn/bin:/run/build/standardnotes/flatpak-node/chromedrive'
+      append-path: /usr/lib/sdk/node14/bin:/app/yarn/bin:/run/build/standardnotes/flatpak-node/chromedrive
       env:
         # Don't add ELECTRON_CACHE
         XDG_CACHE_HOME: /run/build/standardnotes/flatpak-node/cache
@@ -69,7 +69,7 @@ modules:
         npm_config_offline: 'true'
         npm_config_no_save: 'true'
         npm_config_cache: /run/build/standardnotes/flatpak-node/npm-cache
-        npm_config_loglevel: 'verbose'
+        npm_config_loglevel: verbose
         # https://stackoverflow.com/questions/25146976/can-i-get-npm-gyp-to-use-ccache
         CXX: ccache g++
         CC: ccache gcc
@@ -96,89 +96,59 @@ modules:
 
     build-commands:
       # No need to prettify the code
-      - sed -i -e "s/npm run lint:formatting && npm run lint:eslint && //"
-        package.json
+      - sed -i -e "s/yarn run lint && //" package.json
       # put --offline option to yarn
       - sed -i 's/yarn/yarn --offline/g' package.json
-      - sed -i 's/yarn/yarn --offline/g' web/package.json
       # don't build all arches in each arch, but do it respectively
       - sed -i -e "s/ --x64 --ia32//" package.json
 
-      - cp .env.js.sample .env.js
+      - cp .env.sample .env
 
       # Use the offline mirror.
-      - 'HOME=$PWD yarn config --offline set yarn-offline-mirror
-        $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror'
+      - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
 
-      # Translated from npm run setup
-      - npm install
-      - npm --prefix ./app install
+      # Translated from yarn setup
+      - yarn --offline --pure-lockfile --$npm_config_arch
+      - yarn --offline --pure-lockfile --$npm_config_arch --cwd ./app
       - yarn --offline --pure-lockfile --$npm_config_arch --cwd ./web
 
       # Rebuild native modules by electron-rebuild
       # https://github.com/electron-userland/electron-builder/issues/4100
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
-      - npm --offline run bundle
+      - yarn --offline bundle
       - npx electron-builder --linux dir --$npm_config_arch
 
       # Remove unneeded files
       - rm dist/linux*-unpacked/chrome-sandbox
 
       # Copy the resulting, unpacked directory to /app.
-      - 'cp -r dist/linux*-unpacked /app/standardnotes'
+      - cp -r dist/linux*-unpacked /app/standardnotes
 
       # Retire this at some point when an SVG is available
-      - for size in 256 512; do [[ -e "app/icon/Icon-${size}x${size}.png" ]] &&
-        install -Dm644 "app/icon/Icon-${size}x${size}.png"
-        "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png"; done
+      - for size in 256 512; do [[ -e "app/icon/Icon-${size}x${size}.png" ]] && install
+        -Dm644 "app/icon/Icon-${size}x${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
+        done
     sources:
       # TODO: Replace with the git source
       # https://github.com/standardnotes/web/pull/516
-      - type: archive
-        sha256: baf51d6cfac760d8974faeff3256ddb9478ba363059d99ae3b61cd8b6c569825
-        url: https://github.com/standardnotes/desktop/archive/v3.5.18.tar.gz
-        git-init: true
+      - type: git
+        url: https://github.com/standardnotes/desktop.git
+        tag: v3.6.1
+        commit: 397a7656c56a7453ec65d2c4fcde101674fa7874
         x-checker-data:
           type: anitya
-          'project-id': 146681
-          url-template: https://github.com/standardnotes/desktop/archive/$version.tar.gz
-      - type: archive
-        url: https://github.com/standardnotes/web/archive/3.5.17.tar.gz
-        sha256: 4aaeb7176904e3aacd31d53cf8dbd3037a2468321f726e97857df4f452f76ed9
-        dest: web
-        x-checker-data:
-          type: anitya
-          'project-id': 146683
-          url-template: https://github.com/standardnotes/web/archive/$version.tar.gz
-      - type: git
-        url: https://github.com/sn-extensions/extensions-manager.git
-        dest: app/extensions/extensions-manager
-      - type: git
-        url: https://github.com/sn-extensions/batch-manager.git
-        dest: web/public/extensions/batch-manager
-      - type: git
-        url: https://github.com/sn-extensions/batch-manager.git
-        dest: app/extensions/batch-manager
-      # - type: git
-      #   # url: https://github.com/standardnotes/desktop
-      #   # tag: v3.5.18
-      #   path: ../standardnotes-desktop
-      #   commit: master
+          project-id: 146681
+          tag-template: v$version
       # Add the flatpak-node-generator generated sources.
       # Note to generate recursively with -r since the repo is composed by submodules
       # No need to generate a separate one for ./app
-      # NPM
       - generated-sources.json
-      # YARN
-      - generated-sources.web.json
-      - type: patch
-        path: remove-updater.patch
   - name: start-script
     buildsystem: simple
     build-commands:
       # Install the wrapper script to start it.
-      - 'install -Dm 755 start-standardnotes.sh /app/bin/start-standardnotes'
+      - install -Dm 755 start-standardnotes.sh /app/bin/start-standardnotes
     sources:
       # Our runner script.
       - type: script
@@ -190,16 +160,14 @@ modules:
   - name: metainfo
     buildsystem: simple
     build-commands:
-      - install -Dm644 org.standardnotes.standardnotes.metainfo.xml
-        /app/share/metainfo/$FLATPAK_ID.metainfo.xml
+      - install -Dm644 org.standardnotes.standardnotes.metainfo.xml /app/share/metainfo/$FLATPAK_ID.metainfo.xml
     sources:
       - type: file
         path: org.standardnotes.standardnotes.metainfo.xml
   - name: desktop-entry
     buildsystem: simple
     build-commands:
-      - install -Dm644 org.standardnotes.standardnotes.desktop
-        /app/share/applications/$FLATPAK_ID.desktop
+      - install -Dm644 org.standardnotes.standardnotes.desktop /app/share/applications/$FLATPAK_ID.desktop
     sources:
       - type: file
         path: org.standardnotes.standardnotes.desktop
