@@ -96,28 +96,27 @@ modules:
 
     build-commands:
       # No need to prettify the code
-      - sed -i -e "s/npm run lint:formatting && npm run lint:eslint && //" package.json
+      - sed -i -e "s/yarn run lint && //" package.json
       # put --offline option to yarn
       - sed -i 's/yarn/yarn --offline/g' package.json
-      - sed -i 's/yarn/yarn --offline/g' web/package.json
       # don't build all arches in each arch, but do it respectively
       - sed -i -e "s/ --x64 --ia32//" package.json
 
-      - cp .env.js.sample .env.js
+      - cp .env.sample .env
 
       # Use the offline mirror.
       - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
 
-      # Translated from npm run setup
-      - npm install
-      - npm --prefix ./app install
+      # Translated from yarn setup
+      - yarn --offline --pure-lockfile --$npm_config_arch
+      - yarn --offline --pure-lockfile --$npm_config_arch --cwd ./app
       - yarn --offline --pure-lockfile --$npm_config_arch --cwd ./web
 
       # Rebuild native modules by electron-rebuild
       # https://github.com/electron-userland/electron-builder/issues/4100
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
-      - npm --offline run bundle
+      - yarn --offline bundle
       - npx electron-builder --linux dir --$npm_config_arch
 
       # Remove unneeded files
@@ -133,45 +132,18 @@ modules:
     sources:
       # TODO: Replace with the git source
       # https://github.com/standardnotes/web/pull/516
-      - type: archive
-        sha256: baf51d6cfac760d8974faeff3256ddb9478ba363059d99ae3b61cd8b6c569825
-        url: https://github.com/standardnotes/desktop/archive/v3.5.18.tar.gz
-        git-init: true
+      - type: git
+        url: https://github.com/standardnotes/desktop.git
+        tag: v3.6.1
+        commit: 397a7656c56a7453ec65d2c4fcde101674fa7874
         x-checker-data:
           type: anitya
           project-id: 146681
-          url-template: https://github.com/standardnotes/desktop/archive/$version.tar.gz
-      - type: archive
-        url: https://github.com/standardnotes/web/archive/3.6.1.tar.gz
-        sha256: 1316137978cf35f2281db6d48fc07759ef7bb146beacbcb0c87c2da959dc3172
-        dest: web
-        x-checker-data:
-          type: anitya
-          project-id: 146683
-          url-template: https://github.com/standardnotes/web/archive/$version.tar.gz
-      - type: git
-        url: https://github.com/sn-extensions/extensions-manager.git
-        dest: app/extensions/extensions-manager
-      - type: git
-        url: https://github.com/sn-extensions/batch-manager.git
-        dest: web/public/extensions/batch-manager
-      - type: git
-        url: https://github.com/sn-extensions/batch-manager.git
-        dest: app/extensions/batch-manager
-      # - type: git
-      #   # url: https://github.com/standardnotes/desktop
-      #   # tag: v3.5.18
-      #   path: ../standardnotes-desktop
-      #   commit: master
+          tag-template: v$version
       # Add the flatpak-node-generator generated sources.
       # Note to generate recursively with -r since the repo is composed by submodules
       # No need to generate a separate one for ./app
-      # NPM
       - generated-sources.json
-      # YARN
-      - generated-sources.web.json
-      - type: patch
-        path: remove-updater.patch
   - name: start-script
     buildsystem: simple
     build-commands:
