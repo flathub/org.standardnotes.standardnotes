@@ -3,9 +3,9 @@
   <id>org.standardnotes.standardnotes</id>
 
   <name>Standard Notes</name>
-  <summary>A simple and private place for your notes, thoughts, and life's work</summary>
+  <summary>(Unofficial) A simple and private place for your notes, thoughts, and life's work</summary>
 
-  <developer_name>Standard Notes Ltd.</developer_name>
+  <developer_name>proletarius101</developer_name>
   <agreement type="privacy" version_id="1.0">
     <agreement_section>
       <name>What we collect and how we use the collected data</name>
@@ -85,9 +85,8 @@
           backed up to your cloud provider (like Dropbox and Google Drive).</li>
     </ul>
     <p>You can learn more about Extended at standardnotes.org/extended.</p>
-
-    <p>We're always happy to talk, whether it be a question, thought, or issue. Please feel free to email us any time at
-      help@standardnotes.org. When you take the time to send us a message, we'll be sure to do the same.</p>
+    
+    <p><em>NOTE: This release is not verified by, affiliated with, or supported by Standard Notes Ltd.</em></p>
   </description>
 
   <launchable type="desktop-id">org.standardnotes.standardnotes.desktop</launchable>
