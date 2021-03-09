@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>org.standardnotes.standardnotes</id>
 
-  <name>Standard Notes (Unofficial)</name>
+  <name>Standard Notes</name>
   <summary>(Unofficial) A simple and private place for your notes, thoughts, and life's work</summary>
 
   <developer_name>proletarius101</developer_name>
@@ -33,9 +33,6 @@
   </categories>
 
   <description>
-    <p><em>(Note: This release is built by a 3rd party from official Standard Notes releases. Standard Notes is 
-      unaffiliated with this Flathub listing.)</em></p>
-
     <p>Standard Notes is a simple and private notes app. It syncs your notes securely across all your devices, including
       your Android devices, Windows, iOS, Linux, and Web.</p>
 
@@ -88,6 +85,8 @@
           backed up to your cloud provider (like Dropbox and Google Drive).</li>
     </ul>
     <p>You can learn more about Extended at standardnotes.org/extended.</p>
+    
+    <p><em>NOTE: This release is not verified by, affiliated with, or supported by Standard Notes Ltd.</em></p>
   </description>
 
   <launchable type="desktop-id">org.standardnotes.standardnotes.desktop</launchable>
