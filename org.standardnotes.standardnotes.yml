@@ -1,10 +1,10 @@
 app-id: org.standardnotes.standardnotes
 branch: stable
 runtime: org.freedesktop.Platform
-runtime-version: '20.08'
+runtime-version: "20.08"
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: '20.08'
+base-version: "20.08"
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node14
 # Electron doesn't use a traditional locale format so separate-locales is useless.
@@ -40,7 +40,7 @@ modules:
     post-install:
       - chmod 644 $FLATPAK_DEST/lib/libpython2.7.so.1.0
     cleanup:
-      - '*'
+      - "*"
 
   - name: yarn
     buildsystem: simple
@@ -48,7 +48,7 @@ modules:
       - cp -a * /app
     # Only used for building, so clean it up afterwards.
     cleanup:
-      - '*'
+      - "*"
     sources:
       - type: archive
         url: https://github.com/yarnpkg/yarn/releases/download/v1.22.10/yarn-v1.22.10.tar.gz
@@ -66,8 +66,8 @@ modules:
         # Don't add ELECTRON_CACHE
         XDG_CACHE_HOME: /run/build/standardnotes/flatpak-node/cache
         npm_config_nodedir: /usr/lib/sdk/node14
-        npm_config_offline: 'true'
-        npm_config_no_save: 'true'
+        npm_config_offline: "true"
+        npm_config_no_save: "true"
         npm_config_cache: /run/build/standardnotes/flatpak-node/npm-cache
         npm_config_loglevel: verbose
         # https://stackoverflow.com/questions/25146976/can-i-get-npm-gyp-to-use-ccache
@@ -117,7 +117,7 @@ modules:
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
       - yarn --offline bundle
-      - npx electron-builder --linux dir --$npm_config_arch
+      - yarn --offline run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir --publish=never
 
       # Remove unneeded files
       - rm dist/linux*-unpacked/chrome-sandbox
