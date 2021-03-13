@@ -28,11 +28,6 @@ jobs:
                        ${BUILDER_TOOLS_URL} \
                        builder-tools
 
-      - name: Downlad update.py
-        uses: wei/wget@v1
-        with:
-          args: -O update.py https://github.com/flathub/net.veloren.veloren/raw/master/update.py
-
       - name: Run update
         run: |
           set -e
