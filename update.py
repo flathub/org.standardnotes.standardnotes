@@ -60,15 +60,15 @@ def generate_sources(
         urllib.request.urlretrieve(
             generator_script_url or GENERATOR_SCRIPT_URL, generator_script
         )
-    print("here")
-    # os.chmod(generator_script, 775)
+    else:
+        generator_script = os.path.abspath(generator_script)
 
     if generator_args is None:
         generator_args = []
 
     generator_cmdline = [generator_script, "-o", "generated-sources.json"]
     generator_cmdline.extend(generator_args)
-    run(generator_cmdline)
+    run(generator_cmdline, cwd=clone_dir)
     generated_sources = None
     with open("generated-sources.json") as generated_sources:
         generated_sources = json.loads(generated_sources.read())
