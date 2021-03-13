@@ -3,7 +3,7 @@
 name: Auto update
 
 env:
-  BUILDER_TOOLS_URL: https://github.com/catsout/flatpak-builder-tools.git
+  BUILDER_TOOLS_URL: https://github.com/flatpak/flatpak-builder-tools
   BUILDER_TOOLS_BRANCH: master
 
 on:
@@ -28,10 +28,22 @@ jobs:
                        ${BUILDER_TOOLS_URL} \
                        builder-tools
 
+      # Rather than track the tip of a branch
+      - name: Get the current tag
+        run: |
+          set -e
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt install yq
+
+          TAG=`yq eval '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/desktop.git") | .tag' org.standardnotes.standardnotes.yml`
+
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
       - name: Run update
         run: |
           set -e
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config user.name "Workflow trigger"
-          python3 ./update.py standardnotes-git.json --generator-script-url https://github.com/flatpak/flatpak-builder-tools/raw/master/node/flatpak-node-generator.py --generator-arg=--electron-node-headers --generator-arg=--xdg-layout --generator-arg=-r --generator-arg=yarn --generator-arg=yarn.lock
+          python3 ./update.py standardnotes-git.json --ref env.TAG -g builder-tools/node/flatpak-node-generator.py --generator-arg=--electron-node-headers --generator-arg=--xdg-layout --generator-arg=-r --generator-arg=yarn --generator-arg=yarn.lock
           git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}
