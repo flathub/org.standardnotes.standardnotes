@@ -36,7 +36,7 @@ jobs:
           sudo add-apt-repository ppa:rmescandon/yq
           sudo apt install yq
 
-          TAG=`yq eval '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/desktop.git") | .tag' org.standardnotes.standardnotes.yml`
+          TAG=`yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/desktop.git") | .tag' org.standardnotes.standardnotes.yml`
 
           echo "TAG=$TAG" >> $GITHUB_ENV
 
