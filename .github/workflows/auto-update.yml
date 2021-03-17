@@ -5,6 +5,8 @@ name: Auto update
 env:
   BUILDER_TOOLS_URL: https://github.com/flatpak/flatpak-builder-tools
   BUILDER_TOOLS_BRANCH: master
+  YQ_VERSION: "4.6.1"
+  YQ_BINARY: yq_linux_amd64
 
 on:
   push:
@@ -30,9 +32,9 @@ jobs:
       - name: Get the current tag
         run: |
           set -e
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt install yq
+
+          wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY} -O /usr/bin/yq &&\
+          chmod +x /usr/bin/yq
 
           TAG=`yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/desktop.git") | .tag' org.standardnotes.standardnotes.yml`
 
