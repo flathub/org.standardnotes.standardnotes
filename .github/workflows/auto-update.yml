@@ -46,5 +46,5 @@ jobs:
           set -e
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config user.name "Workflow trigger"
-          python3 ./update.py standardnotes-git.json --ref env.TAG -g builder-tools/node/flatpak-node-generator.py --generator-arg=--electron-node-headers --generator-arg=--xdg-layout --generator-arg=-r --generator-arg=yarn --generator-arg=yarn.lock
+          python3 ./update.py standardnotes-git.json --ref ${{ env.TAG }} -g builder-tools/node/flatpak-node-generator.py --generator-arg=--electron-node-headers --generator-arg=--xdg-layout --generator-arg=-r --generator-arg=yarn --generator-arg=yarn.lock
           git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}
