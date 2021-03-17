@@ -96,7 +96,7 @@
   <url type="donation">https://github.com/sponsors/standardnotes</url>
   <url type="help">https://standardnotes.org/help</url>
 
-  <content_rating type="oars-1.1" />
+  <content_rating type="oars-1.1"/>
 
   <screenshots>
     <screenshot type="default">
@@ -114,6 +114,7 @@
   </screenshots>
 
   <releases>
-    <release version="v3.6.1" date="2021-03-03" />
+    <release version="3.6.2" date="2021-03-17"/>
+    <release version="v3.6.1" date="2021-03-03"/>
   </releases>
 </component>
