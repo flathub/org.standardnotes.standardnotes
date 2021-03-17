@@ -6,6 +6,7 @@ import argparse
 import json
 import logging
 import os
+import stat
 import subprocess
 import sys
 import urllib.request
@@ -52,6 +53,7 @@ def generate_sources(
         )
     else:
         generator_script = os.path.abspath(generator_script)
+    os.chmod(generator_script, stat.S_IRWXU)
 
     if generator_args is None:
         generator_args = []
@@ -114,6 +116,8 @@ def main():
         generator_script=args.generator,
         generator_args=args.generator_arg,
     )
+    with open(args.app_source_json, 'w') as o:
+        json.dump(app_source, o, indent=4)
     with open(args.gen_output, "w") as g:
         json.dump(generated_sources, g, indent=4)
 
