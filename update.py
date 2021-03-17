@@ -6,8 +6,10 @@ import argparse
 import json
 import logging
 import os
+import stat
 import subprocess
 import sys
+import shutil
 import urllib.request
 
 GENERATOR_SCRIPT_URL = f"https://github.com/flatpak/flatpak-builder-tools/raw/master/node/flatpak-node-generator.py"
@@ -52,6 +54,7 @@ def generate_sources(
         )
     else:
         generator_script = os.path.abspath(generator_script)
+    os.chmod(generator_script, stat.S_IRWXU)
 
     if generator_args is None:
         generator_args = []
@@ -59,6 +62,9 @@ def generate_sources(
     generator_cmdline = [generator_script, "-o", "generated-sources.json"]
     generator_cmdline.extend(generator_args)
     run(generator_cmdline, cwd=clone_dir)
+    shutil.move(
+        os.path.join(clone_dir, "generated-sources.json"), "generated-sources.json"
+    )
     generated_sources = None
     with open("generated-sources.json") as generated_sources:
         generated_sources = json.loads(generated_sources.read())
@@ -114,6 +120,8 @@ def main():
         generator_script=args.generator,
         generator_args=args.generator_arg,
     )
+    with open(args.app_source_json, "w") as o:
+        json.dump(app_source, o, indent=4)
     with open(args.gen_output, "w") as g:
         json.dump(generated_sources, g, indent=4)
 
