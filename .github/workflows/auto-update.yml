@@ -33,10 +33,11 @@ jobs:
         run: |
           set -e
 
-          wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY} -O /usr/bin/yq &&\
-          chmod +x /usr/bin/yq
+          mkdir ~/bin
+          wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY} -O ~/bin/yq && \
+          chmod +x ~/bin/yq
 
-          TAG=`yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/desktop.git") | .tag' org.standardnotes.standardnotes.yml`
+          TAG=`~/bin/yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/desktop.git") | .tag' org.standardnotes.standardnotes.yml`
 
           echo "TAG=$TAG" >> $GITHUB_ENV
 
