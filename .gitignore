@@ -6,11 +6,10 @@ build/
 flatpak-builder-tools/
 spellchecker/
 standard-notes/
-
+.flatpak
 .DS_Store
 Thumbs.db
 *.iml
-
 
 #
 # Includes
