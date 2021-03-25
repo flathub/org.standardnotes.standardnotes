@@ -14,6 +14,13 @@
     },
     {
         "type": "file",
+        "url": "https://codeload.github.com/standardnotes/StyleKit/tar.gz/1ec13454cc6d8cf97651263a039de8872be527b8",
+        "sha256": "1c0383aecffc3476789cdd52e0baa8d5a5ced0f21dc0e967e1d26d4db7d4a91d",
+        "dest-filename": "1ec13454cc6d8cf97651263a039de8872be527b8",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
         "url": "https://codeload.github.com/standardnotes/decrypt/tar.gz/47ecafbb15151315ef25f38fdb72661d51e8a37e",
         "sha256": "02476e5d9b21ae09a64ee23fe309e043d3f606ff160612dc7e10cc254ffc15b5",
         "dest-filename": "47ecafbb15151315ef25f38fdb72661d51e8a37e",
@@ -8216,9 +8223,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.0.67.tgz#87e29f40bb5efaa36f30ddc5905164f7dce194d9",
-        "sha512": "5c20f1945402874ce65771dcf668d4eeb8ad67fd8c6b924fa026c3cb808802590a76654be2dbbfe2309f44520b334ce9285fe42ec0936cb19d1bb4e053f45e2a",
-        "dest-filename": "@standardnotes-snjs-2.0.67.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.0.70.tgz#259a4fadc4f9b360f35a399b674b921179bd5768",
+        "sha512": "0f5d44fac09ea2b6a6dbe36142e1669f7df72681ebd641a3559ae44666657e11a2f9d61726a66e0c30c76d19f95842509de0e0e3767c0e38c09712fe32a869eb",
+        "dest-filename": "@standardnotes-snjs-2.0.70.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -19125,13 +19132,6 @@
         "url": "https://registry.yarnpkg.com/sn-stylekit/-/sn-stylekit-2.0.15.tgz#40d28759d6d25eb9011535a32fffb8e2156bed53",
         "sha512": "418f0cb671e9872189d277b4e4312188f42e69c3874f5a30c65d5456c08d45a63c12dc07d8a072bbd300b5606932236a190133d4d2baf153a5d6545f08adb981",
         "dest-filename": "sn-stylekit-2.0.15.tgz",
-        "dest": "flatpak-node/yarn-mirror"
-    },
-    {
-        "type": "file",
-        "url": "https://registry.yarnpkg.com/sn-stylekit/-/sn-stylekit-2.2.1.tgz#4a81a05b2b2d67a11af9d06f3964ac1ece3aa84a",
-        "sha512": "9abbd46dfd876d639fc5b360968ed15dae4905ef5457daeeaeea5e1a85ff2a1e3f955941da7ff9e994f5d37c64ff8b69d3f9950a9c630fb0edd6cb4a171b2f14",
-        "dest-filename": "sn-stylekit-2.2.1.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
