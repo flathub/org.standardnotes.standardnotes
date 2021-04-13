@@ -13116,6 +13116,13 @@
     },
     {
         "type": "file",
+        "url": "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d",
+        "sha512": "85c8376667a94b7d3fec1485a91be8a370ce310bbb223ab13b99c20edfb333d5d68dbdf75a0ef388d4fe42fa9bb9cdfe816a733b4d89b9b5729361b866fa3539",
+        "dest-filename": "fs-extra-9.1.0.tgz",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
         "url": "https://registry.yarnpkg.com/fs-readdir-recursive/-/fs-readdir-recursive-1.1.0.tgz#e32fc030a2ccee44a6b5371308da54be0b397d27",
         "sha512": "18d6a75e556bda97f4dbeb0f378d1737c1c6f9e3da35cbccd2ae6664177aebc39bc1bd320f91a251b64e160c27f2418c63a23799dc8327389e532dcf4d8c9344",
         "dest-filename": "fs-readdir-recursive-1.1.0.tgz",
