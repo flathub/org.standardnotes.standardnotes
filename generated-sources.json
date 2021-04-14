@@ -16112,13 +16112,6 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-3.2.0.tgz#331d7365a6b053378dfe9c087315b4e41c5df69f",
-        "sha512": "ab9f941c8a9808ea41a059bf3c4943b8e85b71ab6f4e5960469dccd6cf87a798f467a5cd8036e0ab16b0274640504c8a33c5f5cecef43c2ba1008cd7d5fe10fe",
-        "dest-filename": "mobx-react-lite-3.2.0.tgz",
-        "dest": "flatpak-node/yarn-mirror"
-    },
-    {
-        "type": "file",
         "url": "https://registry.yarnpkg.com/mobx/-/mobx-6.1.6.tgz#ae75e57ec07d190ed187273864002163fa357224",
         "sha512": "ddbcb402fa1d69dff771d3c0b89ba3f2359785ed580721ca6849289c3f7239d70ca0cba8b768eb8e54979903e14756c9a4d1df4ac3b1d76dad33d3efdc8cc558",
         "dest-filename": "mobx-6.1.6.tgz",
