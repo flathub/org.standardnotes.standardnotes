@@ -14,13 +14,6 @@
     },
     {
         "type": "file",
-        "url": "https://codeload.github.com/standardnotes/StyleKit/tar.gz/c64573b229ac9154e480cde3b5fdab78c75b3530",
-        "sha256": "547baaf576e9a7b4cc10e779be2a2f44edb9e447686df28a14fe9038f1229384",
-        "dest-filename": "c64573b229ac9154e480cde3b5fdab78c75b3530",
-        "dest": "flatpak-node/yarn-mirror"
-    },
-    {
-        "type": "file",
         "url": "https://codeload.github.com/standardnotes/decrypt/tar.gz/47ecafbb15151315ef25f38fdb72661d51e8a37e",
         "sha256": "02476e5d9b21ae09a64ee23fe309e043d3f606ff160612dc7e10cc254ffc15b5",
         "dest-filename": "47ecafbb15151315ef25f38fdb72661d51e8a37e",
@@ -8293,9 +8286,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.0.74.tgz#042c3dcf5447006cdfc70b8cfcacf7ded92cea91",
-        "sha512": "d86d23c359f81a03a74a4a570d7beb269f51f31b08995adf3518ca34113b46acc1836585ca7179c6dd1b7eaccb751159c80e687ae1244c6d42014e2734fcb4c7",
-        "dest-filename": "@standardnotes-snjs-2.0.74.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.0.75.tgz#aeb0ead927da63dc85e28f78da2362126bb16602",
+        "sha512": "40be588034f468df6df7983181446a36e757af976d795b1cd7296c28a4b0d03a441a2ab46c008fc5b23eb14169a68593166a6bc660e1dfebdcf8515c160ecbcb",
+        "dest-filename": "@standardnotes-snjs-2.0.75.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -13144,13 +13137,6 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d",
-        "sha512": "85c8376667a94b7d3fec1485a91be8a370ce310bbb223ab13b99c20edfb333d5d68dbdf75a0ef388d4fe42fa9bb9cdfe816a733b4d89b9b5729361b866fa3539",
-        "dest-filename": "fs-extra-9.1.0.tgz",
-        "dest": "flatpak-node/yarn-mirror"
-    },
-    {
-        "type": "file",
         "url": "https://registry.yarnpkg.com/fs-readdir-recursive/-/fs-readdir-recursive-1.1.0.tgz#e32fc030a2ccee44a6b5371308da54be0b397d27",
         "sha512": "18d6a75e556bda97f4dbeb0f378d1737c1c6f9e3da35cbccd2ae6664177aebc39bc1bd320f91a251b64e160c27f2418c63a23799dc8327389e532dcf4d8c9344",
         "dest-filename": "fs-readdir-recursive-1.1.0.tgz",
@@ -16108,6 +16094,13 @@
         "url": "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def",
         "sha512": "34a98094449fea3306ca6d7ef91d116bbc2f855fb0156eb715a48e14fc116a1bde6b480c51c19485578083fd010b4c22bfd8a1e4d60f0755a7d54108d7f2fec5",
         "dest-filename": "mkdirp-0.5.5.tgz",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
+        "url": "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-3.2.0.tgz#331d7365a6b053378dfe9c087315b4e41c5df69f",
+        "sha512": "ab9f941c8a9808ea41a059bf3c4943b8e85b71ab6f4e5960469dccd6cf87a798f467a5cd8036e0ab16b0274640504c8a33c5f5cecef43c2ba1008cd7d5fe10fe",
+        "dest-filename": "mobx-react-lite-3.2.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -19160,6 +19153,13 @@
         "url": "https://registry.yarnpkg.com/sn-stylekit/-/sn-stylekit-2.0.15.tgz#40d28759d6d25eb9011535a32fffb8e2156bed53",
         "sha512": "418f0cb671e9872189d277b4e4312188f42e69c3874f5a30c65d5456c08d45a63c12dc07d8a072bbd300b5606932236a190133d4d2baf153a5d6545f08adb981",
         "dest-filename": "sn-stylekit-2.0.15.tgz",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
+        "url": "https://registry.yarnpkg.com/sn-stylekit/-/sn-stylekit-4.0.3.tgz#f8b86a68286bf5237dfc035c43a31464625b010c",
+        "sha512": "70ab2add79dd131a732673faaa377992119b3612a503bdb830b6f16cc6e052fdda61059975d1ee77357ce0b6f9831f3b99b510250734961d273d6641a5ada150",
+        "dest-filename": "sn-stylekit-4.0.3.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
