@@ -8286,9 +8286,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.0.75.tgz#aeb0ead927da63dc85e28f78da2362126bb16602",
-        "sha512": "40be588034f468df6df7983181446a36e757af976d795b1cd7296c28a4b0d03a441a2ab46c008fc5b23eb14169a68593166a6bc660e1dfebdcf8515c160ecbcb",
-        "dest-filename": "@standardnotes-snjs-2.0.75.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.1.0.tgz#0f11c0cc5d4aabb4fbe347bd6fb5ae2723bc1b29",
+        "sha512": "6239bf71898aa8bd8afe0a0fefc3fd97682cff38e80748605f123a339f065f89a64c07391ecec26fc206dd01e10daa14a656a3c9a9ffd7cf1161e7a91e6bbd60",
+        "dest-filename": "@standardnotes-snjs-2.1.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -11915,6 +11915,13 @@
         "url": "https://registry.yarnpkg.com/electron-builder/-/electron-builder-22.9.1.tgz",
         "sha512": "1973edf25e4cc709b540a628a5433afd3761f56dfaf791ba031f881728f9a50e751b8483e4bd6eab8fd190f4ac3a0b37acfee335257a83a39f0f376d56e7cf74",
         "dest-filename": "electron-builder-22.9.1.tgz",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
+        "url": "https://registry.yarnpkg.com/electron-clear-data/-/electron-clear-data-1.0.4.tgz#d1d1429bb5e922eb0747c3b0ae21523a126e1010",
+        "sha512": "c1ec6713c2a40549fdbc6f40cdc8a21aef1bdf4b461ad7680dc47b892df9056c696592caf9f67d14a04451eed2e8cee7a5b4595d08add604668c5af542e3c4fb",
+        "dest-filename": "electron-clear-data-1.0.4.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -19451,9 +19458,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8",
-        "sha512": "dd681ed7484d713d4ababe0f0c5c0489e5d208c089b3fed6bd200272b318acda7e6fc9032f5ff4c09721e4d8b65abb7011ad883bc3ac55f78a21c88a083c7f40",
-        "dest-filename": "ssri-6.0.1.tgz",
+        "url": "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5",
+        "sha512": "71ea5b4aafe77852bbc41e80e74287374c470e8b58ceae7cc1609ae4b796aa73eb1c6f06cdf1233bfe0ef24a667065bea1ac64be110909681b80d938fd957ddd",
+        "dest-filename": "ssri-6.0.2.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
