@@ -3,7 +3,7 @@
   <id>org.standardnotes.standardnotes</id>
 
   <name>Standard Notes</name>
-  <summary>(Unofficial) A simple and private place for your notes, thoughts, and life's work</summary>
+  <summary>A simple and private place for your notes, thoughts, and life's work</summary>
 
   <developer_name>Standard Notes Ltd.</developer_name>
   <agreement type="privacy" version_id="1.0">
@@ -33,6 +33,8 @@
   </categories>
 
   <description>
+    <p>NOTE: This release is not verified by, affiliated with, or supported by Standard Notes Ltd.</p>
+
     <p>Standard Notes is a simple and private notes app. It syncs your notes securely across all your devices, including
       your Android devices, Windows, iOS, Linux, and Web.</p>
 
@@ -85,8 +87,6 @@
           backed up to your cloud provider (like Dropbox and Google Drive).</li>
     </ul>
     <p>You can learn more about Extended at standardnotes.org/extended.</p>
-    
-    <p>NOTE: This release is not verified by, affiliated with, or supported by Standard Notes Ltd.</p>
   </description>
 
   <launchable type="desktop-id">org.standardnotes.standardnotes.desktop</launchable>
