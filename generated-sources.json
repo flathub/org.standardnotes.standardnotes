@@ -14,9 +14,9 @@
     },
     {
         "type": "file",
-        "url": "https://codeload.github.com/standardnotes/decrypt/tar.gz/47ecafbb15151315ef25f38fdb72661d51e8a37e",
-        "sha256": "02476e5d9b21ae09a64ee23fe309e043d3f606ff160612dc7e10cc254ffc15b5",
-        "dest-filename": "47ecafbb15151315ef25f38fdb72661d51e8a37e",
+        "url": "https://codeload.github.com/standardnotes/decrypt/tar.gz/2a4c13c3305f4d3b9f0714e17bf39921b172bc27",
+        "sha256": "590e194a9878a58a539e101a73497ccfc03959bacea188ddede43e806a9bc15a",
+        "dest-filename": "2a4c13c3305f4d3b9f0714e17bf39921b172bc27",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -8265,9 +8265,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/sncrypto-common/-/sncrypto-common-1.2.10.tgz",
-        "sha512": "61f3d0e29c651993986fad8cbbb9bd51676e24a9f7fedc44eed43a1b7aa3abab2e0f402c7707fd5b68783f959ae9a60c7c75a4d9e9c17d0a3d84183749c9f239",
-        "dest-filename": "@standardnotes-sncrypto-common-1.2.10.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/auth/-/auth-2.3.0.tgz#b8ef5d896619ba4eebcaa8bbe829649038fd505e",
+        "sha512": "0f5b65c50157678916f17f7461c3a6022a336196f6209b496bab4f9dbbbebd7385be2a5b5b6cf682b376cdc604754a56ea6f35f7eff2733cc808477adf160001",
+        "dest-filename": "@standardnotes-auth-2.3.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -8279,9 +8279,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/sncrypto-web/-/sncrypto-web-1.2.10.tgz",
-        "sha512": "9a61e55c5168bc1a8e75cb69324c974e92b4cc8fe4e0db97a15e4b4462ca217524b53f7f719835a6034d7c63c550ffa0e02e4cdaac5e16664a161e7cd62a6895",
-        "dest-filename": "@standardnotes-sncrypto-web-1.2.10.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/sncrypto-common/-/sncrypto-common-1.3.0.tgz#ba0a66a634c7aa21ab9cf34548b249a96533a584",
+        "sha512": "71d72eb179385466ef2e2ad3addf750523ceec2e7339935a1281cb5944b6109a71536d5a63513b9df11b2770760dd051755c1831f9fa62e4579357d2e55e381a",
+        "dest-filename": "@standardnotes-sncrypto-common-1.3.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -8293,16 +8293,23 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.0.54.tgz",
-        "sha512": "ab5144aec56d8622e939aae92a8868661bd76fc046be0081a57cdb0d9eb8ff5e4bda512b1544d86d7c72925053cb90c26d42f0521ef006f926ef8245d741a196",
-        "dest-filename": "@standardnotes-snjs-2.0.54.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/sncrypto-web/-/sncrypto-web-1.3.0.tgz#b7ffbf5face58871fde1110e9149fc37b31f59ab",
+        "sha512": "96157796533f19955ebbc9eb8bf67d579d10b0391cb30383e5aa9beb746879028df9b96436ea1bba68ad30dc7b7099e1196c2642e586991a55bea9801aa2b613",
+        "dest-filename": "@standardnotes-sncrypto-web-1.3.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.1.1.tgz#789bb492e76ee4fe5816ed0de01c9b774244034d",
-        "sha512": "19e38f6465f92b66017732165664bfcf8c1d4092cbcf8628da58def2b8dea7678b9548908513b905559a3aba18ab4b9a21a9ad7d2afc9beb706d85240a43d221",
-        "dest-filename": "@standardnotes-snjs-2.1.1.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.3.0.tgz#52f6b5458e348e77642f922dd4302ad8c6d28914",
+        "sha512": "e3194b715289ce786a093296cb822160f6e7c5cde4eba7f305e4dd589a9967f9f4bce4f6975ff26c246b3cfd28b3fecd142b4adc2a889c0a5bcd93fac57521b8",
+        "dest-filename": "@standardnotes-snjs-2.3.0.tgz",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.3.1.tgz#48b68050ac4c4616bebab0128fd093cad0d65ea7",
+        "sha512": "3d35ade51e0e4eb6f230a5fc793aff7dce99d28e16ace26e7037cc5160507886a31d083b577307a69d0f02bcfe492d50763de7ede55d979ab21c58f298bdc2ff",
+        "dest-filename": "@standardnotes-snjs-2.3.1.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -15468,7 +15475,7 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/libsodium-wrappers/-/libsodium-wrappers-0.7.9.tgz",
+        "url": "https://registry.yarnpkg.com/libsodium-wrappers/-/libsodium-wrappers-0.7.9.tgz#4ffc2b69b8f7c7c7c5594a93a4803f80f6d0f346",
         "sha512": "f476807811a4d6729344544792dee7cf1a82be79164e39f5a5d8ca81c5276718f417238fe029e180584c76b15f80db2e9228c11b204ba4fda6dae293d6fb9685",
         "dest-filename": "libsodium-wrappers-0.7.9.tgz",
         "dest": "flatpak-node/yarn-mirror"
@@ -15482,7 +15489,7 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/libsodium/-/libsodium-0.7.9.tgz",
+        "url": "https://registry.yarnpkg.com/libsodium/-/libsodium-0.7.9.tgz#4bb7bcbf662ddd920d8795c227ae25bbbfa3821b",
         "sha512": "81f7800ed4780ff08cd28454be22815623065d90e09c574c28ccc7b2f05da8b04777dc928ba12d6279ae8475430d8818a403bc794f21118f85f2f21400f874f0",
         "dest-filename": "libsodium-0.7.9.tgz",
         "dest": "flatpak-node/yarn-mirror"
@@ -19311,9 +19318,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/sn-stylekit/-/sn-stylekit-4.0.3.tgz#f8b86a68286bf5237dfc035c43a31464625b010c",
-        "sha512": "70ab2add79dd131a732673faaa377992119b3612a503bdb830b6f16cc6e052fdda61059975d1ee77357ce0b6f9831f3b99b510250734961d273d6641a5ada150",
-        "dest-filename": "sn-stylekit-4.0.3.tgz",
+        "url": "https://registry.yarnpkg.com/sn-stylekit/-/sn-stylekit-5.1.0.tgz#97ce7323834ff7f3645ed4463beb3ad4e42f7e7e",
+        "sha512": "4a328960646747588256d965a89c96f7f81657b579e8c26b9171c4a39f82f42877b32451946de4f80c02d2f0bc9ace8f5b1a472547421cb4113af14e04f42e0b",
+        "dest-filename": "sn-stylekit-5.1.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
