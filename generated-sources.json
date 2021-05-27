@@ -2183,6 +2183,13 @@
     {
         "type": "file",
         "url": "https://registry.npmjs.org/eslint/-/eslint-3.18.0.tgz#647e985c4ae71502d20ac62c109f66d5104c8a4b",
+        "sha256": "9c1df80a4be0707d07097bbc5577a26b720ac827c71a8c2b3e83ee4a677c1b9c",
+        "dest-filename": "eslint-3.18.0.tgz",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
+        "url": "https://registry.npmjs.org/eslint/-/eslint-3.18.0.tgz#647e985c4ae71502d20ac62c109f66d5104c8a4b",
         "sha256": "bf8ddf3d0f0250e64b802bf8e9317714e32385f120e10e133143d8d71b708571",
         "dest-filename": "eslint-3.18.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
@@ -8307,9 +8314,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.3.1.tgz#48b68050ac4c4616bebab0128fd093cad0d65ea7",
-        "sha512": "3d35ade51e0e4eb6f230a5fc793aff7dce99d28e16ace26e7037cc5160507886a31d083b577307a69d0f02bcfe492d50763de7ede55d979ab21c58f298bdc2ff",
-        "dest-filename": "@standardnotes-snjs-2.3.1.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.4.2.tgz#5d3dfd6ae5f40984e0d28b776684561b5818eadf",
+        "sha512": "fd1f0bb1ba3d36a43615929ee0de15e1943151b7e6cd4e6303a16d5b4c04fa0e9ce4cb473cef5f46858af353c95ee99cfadf5523cab69ecc24b61caa20680480",
+        "dest-filename": "@standardnotes-snjs-2.4.2.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
