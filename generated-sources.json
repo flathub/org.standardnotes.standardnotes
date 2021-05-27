@@ -2183,13 +2183,6 @@
     {
         "type": "file",
         "url": "https://registry.npmjs.org/eslint/-/eslint-3.18.0.tgz#647e985c4ae71502d20ac62c109f66d5104c8a4b",
-        "sha256": "9c1df80a4be0707d07097bbc5577a26b720ac827c71a8c2b3e83ee4a677c1b9c",
-        "dest-filename": "eslint-3.18.0.tgz",
-        "dest": "flatpak-node/yarn-mirror"
-    },
-    {
-        "type": "file",
-        "url": "https://registry.npmjs.org/eslint/-/eslint-3.18.0.tgz#647e985c4ae71502d20ac62c109f66d5104c8a4b",
         "sha256": "bf8ddf3d0f0250e64b802bf8e9317714e32385f120e10e133143d8d71b708571",
         "dest-filename": "eslint-3.18.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
