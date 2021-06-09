@@ -46,6 +46,8 @@ jobs:
           set -e
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config user.name "Workflow trigger"
-          rm standardnotes-git.json
-          python3 ./update.py standardnotes-git.json --ref ${{ env.TAG }} -g builder-tools/node/flatpak-node-generator.py --generator-arg=--electron-node-headers --generator-arg=--xdg-layout --generator-arg=-r --generator-arg=yarn --generator-arg=yarn.lock
+          export UPDATE_METADATA_FILE=standardnotes-git.json
+          rm ${UPDATE_METADATA_FILE}
+          touch ${UPDATE_METADATA_FILE}
+          python3 ./update.py ${UPDATE_METADATA_FILE} --ref ${{ env.TAG }} -g builder-tools/node/flatpak-node-generator.py --generator-arg=--electron-node-headers --generator-arg=--xdg-layout --generator-arg=-r --generator-arg=yarn --generator-arg=yarn.lock
           git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}
