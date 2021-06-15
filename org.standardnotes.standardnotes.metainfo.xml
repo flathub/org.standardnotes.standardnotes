@@ -114,6 +114,7 @@
   </screenshots>
 
   <releases>
+    <release version="3.8.2" date="2021-06-15"/>
     <release version="3.7.1" date="2021-05-27"/>
     <release version="3.7.0" date="2021-05-26"/>
     <release version="3.6.14" date="2021-05-20"/>
