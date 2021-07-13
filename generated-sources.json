@@ -5297,9 +5297,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.7.15.tgz#abb03ff9c43a075ac919d0505f48a60a9202410d",
-        "sha512": "70914da7faec10a8e283a1c5c1985b05ee607774cba2bfe40451de684c425c74e5b4db365af2007ab8173744cba94f5730ad2aa6242b517854aecd25e716ae03",
-        "dest-filename": "@standardnotes-snjs-2.7.15.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.7.17.tgz#e83986e637dbfdb9ac0d94270c6a3d7391de88ce",
+        "sha512": "334df47b1df84d33175934d6bb656249810729349c7f5c5b0b4dc8232b310bd051629c0087df7a579450422516de3896d173075f115837f5e12866079f96e2c7",
+        "dest-filename": "@standardnotes-snjs-2.7.17.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -16203,9 +16203,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/sn-stylekit/-/sn-stylekit-5.2.3.tgz#24246471c03cde5129bda51a08fabef4d3c4880c",
-        "sha512": "873ce21fcf4863652398687c39881aa5bfbf4150fa3fa34d8e7a32cd2caf78e87aef530cf59e0868f2d94c97248312558d5d2aec6e3de4fc5fb5ae6be024910d",
-        "dest-filename": "sn-stylekit-5.2.3.tgz",
+        "url": "https://registry.yarnpkg.com/sn-stylekit/-/sn-stylekit-5.2.5.tgz#85a28da395fedbaae9f7a91c48648042cdcc8052",
+        "sha512": "f09fbc52d46fba4c89381a7bf51703e0866bbc925b8d863a11d378375db92b4c56f389c38e0511b8fb828f09b8967a7abdc5ce0d4eabe5ddc93032685d8abcc0",
+        "dest-filename": "sn-stylekit-5.2.5.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
