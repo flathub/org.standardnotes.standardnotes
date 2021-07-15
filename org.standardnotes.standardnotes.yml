@@ -133,8 +133,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/standardnotes/desktop.git
-        tag: v3.8.16
-        commit: 416dea12036a4e3c2653d50a2fec84f8e1bb7962
+        tag: v3.8.17
+        commit: e98fb1f959b6423d2a473701713acea0a5efc552
         x-checker-data:
           type: anitya
           project-id: 146681
