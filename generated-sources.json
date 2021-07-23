@@ -5248,16 +5248,16 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/auth/-/auth-2.0.0.tgz#93f633fd40855f87843f911109e92b29dcbc5a04",
-        "sha512": "0763739c29b7a73c01bc153f6107ee0ebb6511b2cede1347dd0aea4b02b6745c141809e5e5440f0bd14a156620972d39ad67afc0c6372149a2651cd411594ab1",
-        "dest-filename": "@standardnotes-auth-2.0.0.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/auth/-/auth-2.3.0.tgz#b8ef5d896619ba4eebcaa8bbe829649038fd505e",
+        "sha512": "0f5b65c50157678916f17f7461c3a6022a336196f6209b496bab4f9dbbbebd7385be2a5b5b6cf682b376cdc604754a56ea6f35f7eff2733cc808477adf160001",
+        "dest-filename": "@standardnotes-auth-2.3.0.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/auth/-/auth-2.3.0.tgz#b8ef5d896619ba4eebcaa8bbe829649038fd505e",
-        "sha512": "0f5b65c50157678916f17f7461c3a6022a336196f6209b496bab4f9dbbbebd7385be2a5b5b6cf682b376cdc604754a56ea6f35f7eff2733cc808477adf160001",
-        "dest-filename": "@standardnotes-auth-2.3.0.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/auth/-/auth-3.1.1.tgz#834701c2e14d31eb204bff90457fa05e9183464a",
+        "sha512": "13dcc3619d60264559044cddedad4bda1690e0661e1f5954ad8f3b5260c7d403185075be7344aa67bd5a7f57c136a1b3af1dc46525e4f90cebed1c8e6ba37533",
+        "dest-filename": "@standardnotes-auth-3.1.1.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
@@ -5297,9 +5297,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.7.18.tgz#90dd33576176da53714438e0819eef180c221381",
-        "sha512": "7d7bfdd4586cc4b44c2bd291d4b2cdcc6fe4f6f76732aaea33042b7d11020ea2511b6899be5bd5ab3816281098b42bcb4474919c59add313ca036cae4e466aa4",
-        "dest-filename": "@standardnotes-snjs-2.7.18.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.7.21.tgz#db451e5facaf5fa41fa509eb1f304723929c3541",
+        "sha512": "1a19069352c9983e3de023999123a0c876949c69cb58d2e54ae099313c1bc3776090de4f8e86db4617c3bc465a2ea8f0a24fa1f6792242dde1ba043787a0b2e7",
+        "dest-filename": "@standardnotes-snjs-2.7.21.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
