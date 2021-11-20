@@ -42,10 +42,19 @@ def generate_sources(
         repo_dir = app_source["url"].replace("://", "_").replace("/", "_")
         clone_dir = os.path.join(cache_dir, "flatpak-updater", repo_dir)
     if not os.path.isdir(os.path.join(clone_dir, ".git")):
-        run(["git", "clone", "--recursive", app_source["url"], clone_dir])
-
-    run(["git", "fetch", "origin", app_source["ref"]], cwd=clone_dir)
-    run(["git", "checkout", app_source["ref"]], cwd=clone_dir)
+        run(
+            [
+                "git",
+                "clone",
+                "--depth",
+                "1",
+                "--branch",
+                app_source["ref"],
+                "--recursive",
+                app_source["url"],
+                clone_dir,
+            ]
+        )
 
     if generator_script == None:
         generator_script = os.path.join(cache_dir, "flatpak-updater", "generator.py")
