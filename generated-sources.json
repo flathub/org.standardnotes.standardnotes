@@ -2952,9 +2952,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.20.1.tgz#4813adbfd16a1c373357bd4c7ece3085abf142b4",
-        "sha512": "c0920bb7b61eacb15a6532a821968292a4aebe9556a152aa0958cfd0a347acc9279db80c1d9ca01eaadbf6caf9ec92f501c34290050b1054bf91ebf61984c6dd",
-        "dest-filename": "@standardnotes-snjs-2.20.1.tgz",
+        "url": "https://registry.yarnpkg.com/@standardnotes/snjs/-/snjs-2.20.3.tgz#11fe962dfb017be459e856b9fbc6311c5046a0b0",
+        "sha512": "147a20de9dd2b8cbd35ec125efa51e9db8d8f0f4ba54bfdbe8c8da0bdc21251e59c2cbe62f01341b5e9d599fb3fa2ce6f82b1168731653c476732ed11bb1e366",
+        "dest-filename": "@standardnotes-snjs-2.20.3.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
