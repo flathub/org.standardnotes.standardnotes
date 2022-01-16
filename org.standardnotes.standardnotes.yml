@@ -116,7 +116,7 @@ modules:
       # https://github.com/electron-userland/electron-builder/issues/4100
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
-      - yarn --offline bundle
+      - yarn --offline build
       - yarn --offline run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir
         --publish=never
 
