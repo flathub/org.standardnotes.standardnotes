@@ -116,7 +116,8 @@ modules:
       # https://github.com/electron-userland/electron-builder/issues/4100
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
-      - yarn --offline build
+      # https://github.com/standardnotes/desktop/blob/v3.9.15/package.json#L13
+      - yarn --offline build:web && yarn --offline run webpack --config webpack.prod.js
       - yarn --offline run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir
         --publish=never
 
