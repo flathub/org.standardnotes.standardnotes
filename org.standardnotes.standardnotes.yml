@@ -116,7 +116,8 @@ modules:
       # https://github.com/electron-userland/electron-builder/issues/4100
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
-      - yarn --offline bundle
+      # https://github.com/standardnotes/desktop/blob/v3.9.15/package.json#L13
+      - yarn --offline build:web && yarn --offline run webpack --config webpack.prod.js
       - yarn --offline run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir
         --publish=never
 
@@ -133,8 +134,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/standardnotes/desktop.git
-        tag: v3.9.13
-        commit: 268f0861431e7d70adf9df9335c2cab5e2e8e79c
+        tag: v3.9.15
+        commit: 9008c67120b56eec1ff99b9e9c3d4427bd065e2e
         x-checker-data:
           type: anitya
           project-id: 146681
