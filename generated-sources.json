@@ -1,6 +1,13 @@
 [
     {
         "type": "archive",
+        "url": "https://atom.io/download/atom-shell/v5.0.10/node-v5.0.10-headers.tar.gz",
+        "strip-components": 1,
+        "sha256": "2ebfa70ce8914b3b5af4324b20f369bc92932385f1ab3ac2483ba1fd6c3929a1",
+        "dest": "flatpak-node/cache/node-gyp/5.0.10"
+    },
+    {
+        "type": "archive",
         "url": "https://www.electronjs.org/headers/v16.0.4/node-v16.0.4-headers.tar.gz",
         "strip-components": 1,
         "sha256": "628e901a7b47e7cdaf6f88c7d0f8f7561184441680d006bdb98185d31589d685",
@@ -15423,6 +15430,12 @@
         "contents": "9",
         "dest-filename": "installVersion",
         "dest": "flatpak-node/cache/node-gyp/16.0.4"
+    },
+    {
+        "type": "inline",
+        "contents": "9",
+        "dest-filename": "installVersion",
+        "dest": "flatpak-node/cache/node-gyp/5.0.10"
     },
     {
         "type": "script",
