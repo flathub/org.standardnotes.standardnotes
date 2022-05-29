@@ -17,9 +17,11 @@ finish-args:
   - --filesystem=xdg-run/keyring
   - --share=ipc
   - --share=network
-  - --socket=x11
+  - --socket=wayland
+  - --socket=fallback-x11
   - --talk-name=org.freedesktop.Notifications
   - --talk-name=org.freedesktop.secrets
+  - --persist="~/Standard Notes Backups"
 modules:
   - shared-modules/libsecret/libsecret.json
 
@@ -56,7 +58,7 @@ modules:
         x-checker-data:
           type: anitya
           project-id: 13363
-          url-template: https://github.com/yarnpkg/yarn/releases/download/$version/yarn-v$version.tar.gz
+          url-template: https://github.com/yarnpkg/yarn/releases/download/v$version/yarn-v$version.tar.gz
   - name: standardnotes
     buildsystem: simple
     build-options:
@@ -134,8 +136,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/standardnotes/desktop.git
-        tag: v3.20.0
-        commit: 866d1d3d4ff06ded31ade504db6cdb1c724484b8
+        commit: add7f724b65c9bc2749806e88f4d47a40c6c02cd
         x-checker-data:
           type: anitya
           project-id: 146681
@@ -151,14 +152,8 @@ modules:
       # Install the wrapper script to start it.
       - install -Dm 755 start-standardnotes.sh /app/bin/start-standardnotes
     sources:
-      # Our runner script.
-      - type: script
-        dest-filename: start-standardnotes.sh
-        commands:
-          # Use zypak to call the electron binary to enable sandboxing and prevents no sandbox error
-          # Note the hyphen
-          - export TMPDIR=$XDG_RUNTIME_DIR/app/$FLATPAK_ID
-          - zypak-wrapper /app/standardnotes/standard-notes "$@"
+      - type: file
+        path: start-standardnotes.sh
   - name: metainfo
     buildsystem: simple
     build-commands:
