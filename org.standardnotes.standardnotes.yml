@@ -153,7 +153,7 @@ modules:
       - install -Dm 755 start-standardnotes.sh /app/bin/start-standardnotes
     sources:
       - type: file
-        path: run-standardnotes.sh
+        path: start-standardnotes.sh
   - name: metainfo
     buildsystem: simple
     build-commands:
