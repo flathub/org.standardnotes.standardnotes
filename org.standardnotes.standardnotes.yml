@@ -58,7 +58,7 @@ modules:
         x-checker-data:
           type: anitya
           project-id: 13363
-          url-template: https://github.com/yarnpkg/yarn/releases/download/$version/yarn-v$version.tar.gz
+          url-template: https://github.com/yarnpkg/yarn/releases/download/v$version/yarn-v$version.tar.gz
   - name: standardnotes
     buildsystem: simple
     build-options:
