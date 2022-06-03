@@ -53,8 +53,8 @@ modules:
       - '*'
     sources:
       - type: archive
-        url: https://github.com/yarnpkg/yarn/releases/download/v1.22.10/yarn-v1.22.10.tar.gz
-        sha256: 7e433d4a77e2c79e6a7ae4866782608a8e8bcad3ec6783580577c59538381a6e
+        url: https://github.com/yarnpkg/yarn/releases/download/v1.22.19/yarn-v1.22.19.tar.gz
+        sha256: 732620bac8b1690d507274f025f3c6cfdc3627a84d9642e38a07452cc00e0f2e
         x-checker-data:
           type: anitya
           project-id: 13363
@@ -136,7 +136,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/standardnotes/desktop.git
-        commit: add7f724b65c9bc2749806e88f4d47a40c6c02cd
+        commit: 503e21f0b8639b734c992b1772328fbffd144aa3
         x-checker-data:
           type: anitya
           project-id: 146681
@@ -145,6 +145,7 @@ modules:
       # Add the flatpak-node-generator generated sources.
       # Note to generate recursively with -r since the repo is composed by submodules
       # No need to generate a separate one for ./app
+        tag: v3.20.2
       - generated-sources.json
   - name: start-script
     buildsystem: simple
