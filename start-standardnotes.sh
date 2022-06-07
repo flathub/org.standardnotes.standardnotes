@@ -11,7 +11,7 @@ declare -i USE_WAYLAND="${USE_WAYLAND:-1}"
 declare -i EXIT_CODE=0
 
 if [[ "${USE_WAYLAND}" -eq 1 && "${XDG_SESSION_TYPE}" == "wayland" ]]; then
-    zypak-wrapper /app/standardnotes/standard-notes --enable-features=UseOzonePlatform --ozone-platform=wayland $@ || EXIT_CODE=$?
+    zypak-wrapper /app/standardnotes/standard-notes --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland $@ || EXIT_CODE=$?
     # Fall back to x11 if failed to launch under Wayland. Otherwise, exit normally
     [[ "${EXIT_CODE}" -ne 133 ]] && exit "${EXIT_CODE}"
 fi
