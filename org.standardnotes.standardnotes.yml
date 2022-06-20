@@ -145,7 +145,7 @@ modules:
       # Add the flatpak-node-generator generated sources.
       # Note to generate recursively with -r since the repo is composed by submodules
       # No need to generate a separate one for ./app
-        tag: v3.20.2
+        tag: v3.22.11
       - generated-sources.json
   - name: start-script
     buildsystem: simple
