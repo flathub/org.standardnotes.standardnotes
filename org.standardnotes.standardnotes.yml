@@ -97,29 +97,22 @@ modules:
             npm_config_target_arch: arm64
 
     build-commands:
-      # No need to prettify the code
-      - sed -i -e "s/yarn run lint && //" package.json
+      - cd packages/desktop
       # put --offline option to yarn
       - sed -i 's/yarn/yarn --offline/g' package.json
-      # don't build all arches in each arch, but do it respectively
-      - sed -i -e "s/ --x64 --ia32//" package.json
-
-      - cp .env.sample .env
 
       # Use the offline mirror.
       - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
 
       # Translated from yarn setup
       - yarn --offline --pure-lockfile --$npm_config_arch
-      - yarn --offline --pure-lockfile --$npm_config_arch --cwd ./app
-      - yarn --offline --pure-lockfile --$npm_config_arch --cwd ./web
 
       # Rebuild native modules by electron-rebuild
       # https://github.com/electron-userland/electron-builder/issues/4100
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
       # https://github.com/standardnotes/desktop/blob/v3.9.15/package.json#L13
-      - yarn --offline build:web && yarn --offline run webpack --config webpack.prod.js
+      - yarn --offline run webpack --config desktop.webpack.prod.js
       - yarn --offline run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir
         --publish=never
 
