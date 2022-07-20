@@ -6,7 +6,7 @@ sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
 base-version: '21.08'
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.node14
+  - org.freedesktop.Sdk.Extension.node16
 # Electron doesn't use a traditional locale format so separate-locales is useless.
 separate-locales: false
 command: start-standardnotes
@@ -25,49 +25,15 @@ finish-args:
 modules:
   - shared-modules/libsecret/libsecret.json
 
-  # Copied from shared-modules/python2.7/python-2.7.json since it's only used at build time
-  - name: python-2.7
-    sources:
-      - type: archive
-        url: https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz
-        sha256: b62c0e7937551d0cc02b8fd5cb0f544f9405bafc9a54d3808ed4594812edef43
-    config-opts:
-      - --enable-shared
-      - --with-ensurepip=yes
-      - --with-system-expat
-      - --with-system-ffi
-      - --enable-loadable-sqlite-extensions
-      - --with-dbmliborder=gdbm
-      - --enable-unicode=ucs4
-    post-install:
-      - chmod 644 $FLATPAK_DEST/lib/libpython2.7.so.1.0
-    cleanup:
-      - '*'
-
-  - name: yarn
-    buildsystem: simple
-    build-commands:
-      - cp -a * /app
-    # Only used for building, so clean it up afterwards.
-    cleanup:
-      - '*'
-    sources:
-      - type: archive
-        url: https://github.com/yarnpkg/yarn/releases/download/v1.22.19/yarn-v1.22.19.tar.gz
-        sha256: 732620bac8b1690d507274f025f3c6cfdc3627a84d9642e38a07452cc00e0f2e
-        x-checker-data:
-          type: anitya
-          project-id: 13363
-          url-template: https://github.com/yarnpkg/yarn/releases/download/v$version/yarn-v$version.tar.gz
   - name: standardnotes
     buildsystem: simple
     build-options:
       # Add the node bin directory.
-      append-path: /usr/lib/sdk/node14/bin:/app/yarn/bin:/run/build/standardnotes/flatpak-node/chromedrive
+      append-path: /usr/lib/sdk/node16/bin:/app/yarn/bin:/run/build/standardnotes/flatpak-node/chromedrive
       env:
         # Don't add ELECTRON_CACHE
         XDG_CACHE_HOME: /run/build/standardnotes/flatpak-node/cache
-        npm_config_nodedir: /usr/lib/sdk/node14
+        npm_config_nodedir: /usr/lib/sdk/node16
         npm_config_offline: 'true'
         npm_config_no_save: 'true'
         npm_config_cache: /run/build/standardnotes/flatpak-node/npm-cache
@@ -98,22 +64,20 @@ modules:
 
     build-commands:
       - cd packages/desktop
-      # put --offline option to yarn
-      - sed -i 's/yarn/yarn --offline/g' package.json
 
-      # Use the offline mirror.
-      - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
+      # https://github.com/flatpak/flatpak-builder-tools/pull/252
+      - $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn2-setup.sh
 
       # Translated from yarn setup
-      - yarn --offline --pure-lockfile --$npm_config_arch
+      - yarn --immutable --immutable-cache
 
       # Rebuild native modules by electron-rebuild
       # https://github.com/electron-userland/electron-builder/issues/4100
       - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
 
       # https://github.com/standardnotes/desktop/blob/v3.9.15/package.json#L13
-      - yarn --offline run webpack --config desktop.webpack.prod.js
-      - yarn --offline run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir
+      - yarn run webpack --config desktop.webpack.prod.js
+      - yarn run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir
         --publish=never
 
       # Remove unneeded files
@@ -126,6 +90,7 @@ modules:
       - for size in 256 512; do [[ -e "app/icon/Icon-${size}x${size}.png" ]] && install
         -Dm644 "app/icon/Icon-${size}x${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
         done
+    
     sources:
       - type: git
         url: https://github.com/standardnotes/app.git
