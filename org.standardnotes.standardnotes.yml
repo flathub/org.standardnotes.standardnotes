@@ -1,12 +1,12 @@
 app-id: org.standardnotes.standardnotes
 branch: stable
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: "21.08"
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: '21.08'
+base-version: "21.08"
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.node14
+  - org.freedesktop.Sdk.Extension.node16
 # Electron doesn't use a traditional locale format so separate-locales is useless.
 separate-locales: false
 command: start-standardnotes
@@ -25,52 +25,15 @@ finish-args:
 modules:
   - shared-modules/libsecret/libsecret.json
 
-  # Copied from shared-modules/python2.7/python-2.7.json since it's only used at build time
-  - name: python-2.7
-    sources:
-      - type: archive
-        url: https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz
-        sha256: b62c0e7937551d0cc02b8fd5cb0f544f9405bafc9a54d3808ed4594812edef43
-    config-opts:
-      - --enable-shared
-      - --with-ensurepip=yes
-      - --with-system-expat
-      - --with-system-ffi
-      - --enable-loadable-sqlite-extensions
-      - --with-dbmliborder=gdbm
-      - --enable-unicode=ucs4
-    post-install:
-      - chmod 644 $FLATPAK_DEST/lib/libpython2.7.so.1.0
-    cleanup:
-      - '*'
-
-  - name: yarn
-    buildsystem: simple
-    build-commands:
-      - cp -a * /app
-    # Only used for building, so clean it up afterwards.
-    cleanup:
-      - '*'
-    sources:
-      - type: archive
-        url: https://github.com/yarnpkg/yarn/releases/download/v1.22.19/yarn-v1.22.19.tar.gz
-        sha256: 732620bac8b1690d507274f025f3c6cfdc3627a84d9642e38a07452cc00e0f2e
-        x-checker-data:
-          type: anitya
-          project-id: 13363
-          url-template: https://github.com/yarnpkg/yarn/releases/download/v$version/yarn-v$version.tar.gz
   - name: standardnotes
     buildsystem: simple
     build-options:
       # Add the node bin directory.
-      append-path: /usr/lib/sdk/node14/bin:/app/yarn/bin:/run/build/standardnotes/flatpak-node/chromedrive
+      append-path: /usr/lib/sdk/node16/bin:/app/yarn/bin:/run/build/standardnotes/flatpak-node/chromedrive
       env:
         # Don't add ELECTRON_CACHE
         XDG_CACHE_HOME: /run/build/standardnotes/flatpak-node/cache
-        npm_config_nodedir: /usr/lib/sdk/node14
-        npm_config_offline: 'true'
-        npm_config_no_save: 'true'
-        npm_config_cache: /run/build/standardnotes/flatpak-node/npm-cache
+        npm_config_nodedir: /usr/lib/sdk/node16
         npm_config_loglevel: verbose
         # https://stackoverflow.com/questions/25146976/can-i-get-npm-gyp-to-use-ccache
         CXX: ccache g++
@@ -97,55 +60,43 @@ modules:
             npm_config_target_arch: arm64
 
     build-commands:
-      # No need to prettify the code
-      - sed -i -e "s/yarn run lint && //" package.json
-      # put --offline option to yarn
-      - sed -i 's/yarn/yarn --offline/g' package.json
-      # don't build all arches in each arch, but do it respectively
-      - sed -i -e "s/ --x64 --ia32//" package.json
-
-      - cp .env.sample .env
-
-      # Use the offline mirror.
-      - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
+      # https://github.com/flatpak/flatpak-builder-tools/pull/252
+      - $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn2-setup.sh
 
       # Translated from yarn setup
-      - yarn --offline --pure-lockfile --$npm_config_arch
-      - yarn --offline --pure-lockfile --$npm_config_arch --cwd ./app
-      - yarn --offline --pure-lockfile --$npm_config_arch --cwd ./web
+      - yarn install
 
-      # Rebuild native modules by electron-rebuild
-      # https://github.com/electron-userland/electron-builder/issues/4100
-      - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
+      # From github workflows/desktop.release.reuse.yml
+      - |
+        . flatpak-node/electron-builder-arch-args.sh
+        cd packages/desktop
+        yarn build:desktop
+        yarn run webpack --config desktop.webpack.prod.js
+        yarn run electron-builder $ELECTRON_BUILDER_ARCH_ARGS --linux -c.linux.target=dir \
+          --publish=never --c.extraMetadata.version=$(node -p "require('./package.json').version")
 
-      # https://github.com/standardnotes/desktop/blob/v3.9.15/package.json#L13
-      - yarn --offline build:web && yarn --offline run webpack --config webpack.prod.js
-      - yarn --offline run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir
-        --publish=never
+      - |
+        cd packages/desktop
+        rm dist/linux*-unpacked/chrome-sandbox
+        cp -r dist/linux*-unpacked /app/standardnotes
+        for size in 256 512; do
+          [[ -e "app/icon/Icon-${size}x${size}.png" ]] && \
+           install -Dm644 "app/icon/Icon-${size}x${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
+         done
 
-      # Remove unneeded files
-      - rm dist/linux*-unpacked/chrome-sandbox
-
-      # Copy the resulting, unpacked directory to /app.
-      - cp -r dist/linux*-unpacked /app/standardnotes
-
-      # Retire this at some point when an SVG is available
-      - for size in 256 512; do [[ -e "app/icon/Icon-${size}x${size}.png" ]] && install
-        -Dm644 "app/icon/Icon-${size}x${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
-        done
     sources:
       - type: git
-        url: https://github.com/standardnotes/desktop.git
-        commit: 503e21f0b8639b734c992b1772328fbffd144aa3
+        url: https://github.com/standardnotes/app.git
+        commit: 12168945f1cb9bdf449b2bbc7c4d5724a5e95d7a
         x-checker-data:
           type: anitya
           project-id: 146681
-          tag-template: v$version
+          tag-template: "@standardnotes/desktop@$version"
           stable-only: true
-      # Add the flatpak-node-generator generated sources.
-      # Note to generate recursively with -r since the repo is composed by submodules
-      # No need to generate a separate one for ./app
-        tag: v3.22.11
+        # Add the flatpak-node-generator generated sources.
+        # Note to generate recursively with -r since the repo is composed by submodules
+        # No need to generate a separate one for ./app
+        tag: "@standardnotes/desktop@3.23.77"
       - generated-sources.json
   - name: start-script
     buildsystem: simple

@@ -13,7 +13,7 @@ import shutil
 import urllib.request
 
 GENERATOR_SCRIPT_URL = f"https://github.com/flatpak/flatpak-builder-tools/raw/master/node/flatpak-node-generator.py"
-
+FLATPAK_BUILDER_TOOLS_REPO_URL = "https://github.com/flatpak/flatpak-builder-tools"
 
 def run(cmdline, cwd=None):
     logging.info(f"Running {cmdline}")
@@ -32,14 +32,13 @@ def run(cmdline, cwd=None):
 def generate_sources(
     app_source,
     clone_dir=None,
-    generator_script_url=None,
-    generator_script=None,
     generator_args=None,
 ):
     cache_dir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
 
+    # download app repo
     if clone_dir is None:
-        repo_dir = app_source["url"].replace("://", "_").replace("/", "_")
+        repo_dir = url_to_dir_name(app_source["url"])
         clone_dir = os.path.join(cache_dir, "flatpak-updater", repo_dir)
     if not os.path.isdir(os.path.join(clone_dir, ".git")):
         run(
@@ -55,20 +54,28 @@ def generate_sources(
                 clone_dir,
             ]
         )
-
-    if generator_script == None:
-        generator_script = os.path.join(cache_dir, "flatpak-updater", "generator.py")
-        urllib.request.urlretrieve(
-            generator_script_url or GENERATOR_SCRIPT_URL, generator_script
+    
+    # download generator script repo
+    flatpak_builder_tools_clone_dir = os.path.join(cache_dir, "flatpak-updater", FLATPAK_BUILDER_TOOLS_REPO_URL)
+    if not os.path.isdir(os.path.join(clone_dir, ".git")):
+        run(
+            [
+                "git",
+                "clone",
+                "--depth",
+                "1",
+                "--recursive",
+                FLATPAK_BUILDER_TOOLS_REPO_URL,
+                flatpak_builder_tools_clone_dir,
+            ]
         )
-    else:
-        generator_script = os.path.abspath(generator_script)
-    os.chmod(generator_script, stat.S_IRWXU)
+        # install generator script
+        run([
+            "pipx", "install", 'node'
+            
+        ])
 
-    if generator_args is None:
-        generator_args = []
-
-    generator_cmdline = [generator_script, "-o", "generated-sources.json"]
+    generator_cmdline = ["flatpak-node-generator", "-o", "generated-sources.json"]
     generator_cmdline.extend(generator_args)
     run(generator_cmdline, cwd=clone_dir)
     shutil.move(
@@ -98,6 +105,8 @@ def commit_changes(app_source, files, on_new_branch=True):
 
     return target_branch, new_commit
 
+def url_to_dir_name(url: str)-> str:
+    return url.replace("://", "_").replace("/", "_")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -125,8 +134,6 @@ def main():
     generated_sources = generate_sources(
         app_source,
         clone_dir=args.clone_dir,
-        generator_script_url=args.generator_script_url,
-        generator_script=args.generator,
         generator_args=args.generator_arg,
     )
     with open(args.app_source_json, "w") as o:
