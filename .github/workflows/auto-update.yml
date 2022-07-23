@@ -9,6 +9,7 @@ env:
   APPLICATION_ID: org.standardnotes.standardnotes
   YQ_VERSION: "v4.6.1"
   YQ_BINARY: yq_linux_amd64
+  XDG_CACHE_HOME: ${{ github.workspace }}/.cache
 
 on:
   push:
