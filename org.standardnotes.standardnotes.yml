@@ -1,10 +1,10 @@
 app-id: org.standardnotes.standardnotes
 branch: stable
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: "21.08"
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: '21.08'
+base-version: "21.08"
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node16
 # Electron doesn't use a traditional locale format so separate-locales is useless.
@@ -34,9 +34,6 @@ modules:
         # Don't add ELECTRON_CACHE
         XDG_CACHE_HOME: /run/build/standardnotes/flatpak-node/cache
         npm_config_nodedir: /usr/lib/sdk/node16
-        npm_config_offline: 'true'
-        npm_config_no_save: 'true'
-        npm_config_cache: /run/build/standardnotes/flatpak-node/npm-cache
         npm_config_loglevel: verbose
         # https://stackoverflow.com/questions/25146976/can-i-get-npm-gyp-to-use-ccache
         CXX: ccache g++
@@ -63,22 +60,20 @@ modules:
             npm_config_target_arch: arm64
 
     build-commands:
-      - cd packages/desktop
-
       # https://github.com/flatpak/flatpak-builder-tools/pull/252
       - $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn2-setup.sh
 
       # Translated from yarn setup
-      - yarn --immutable --immutable-cache
+      - yarn install
 
-      # Rebuild native modules by electron-rebuild
-      # https://github.com/electron-userland/electron-builder/issues/4100
-      - sed -i 's/"build":\ {/"build":\ {\n"npmRebuild":\ false,/' package.json
-
-      # https://github.com/standardnotes/desktop/blob/v3.9.15/package.json#L13
-      - yarn run webpack --config desktop.webpack.prod.js
-      - yarn run electron-builder --linux dir --$npm_config_arch -c.linux.target=dir
-        --publish=never
+      # From github workflows/desktop.release.reuse.yml
+      - |
+        . flatpak-node/electron-builder-arch-args.sh
+        cd packages/desktop
+        yarn build:desktop
+        yarn run webpack --config desktop.webpack.prod.js
+        yarn run electron-builder $ELECTRON_BUILDER_ARCH_ARGS --linux -c.linux.target=dir \
+          --publish=never --c.extraMetadata.version=$(node -p "require('./package.json').version")
 
       # Remove unneeded files
       - rm dist/linux*-unpacked/chrome-sandbox
@@ -90,7 +85,7 @@ modules:
       - for size in 256 512; do [[ -e "app/icon/Icon-${size}x${size}.png" ]] && install
         -Dm644 "app/icon/Icon-${size}x${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
         done
-    
+
     sources:
       - type: git
         url: https://github.com/standardnotes/app.git
@@ -98,12 +93,12 @@ modules:
         x-checker-data:
           type: anitya
           project-id: 146681
-          tag-template: '@standardnotes/desktop@$version'
+          tag-template: "@standardnotes/desktop@$version"
           stable-only: true
-      # Add the flatpak-node-generator generated sources.
-      # Note to generate recursively with -r since the repo is composed by submodules
-      # No need to generate a separate one for ./app
-        tag: '@standardnotes/desktop@3.23.77'
+        # Add the flatpak-node-generator generated sources.
+        # Note to generate recursively with -r since the repo is composed by submodules
+        # No need to generate a separate one for ./app
+        tag: "@standardnotes/desktop@3.23.77"
       - generated-sources.json
   - name: start-script
     buildsystem: simple
