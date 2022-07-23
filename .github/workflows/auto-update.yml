@@ -30,7 +30,7 @@ jobs:
         run: |
           set -e
 
-          apt-get install jq
+          sudo apt-get install jq
 
           TAG=`yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/app.git") | .tag' org.standardnotes.standardnotes.yml`
 
