@@ -47,13 +47,12 @@ jobs:
 
           flatpak-node-generator --electron-node-headers yarn ${XDG_CACHE_HOME}/${APPLICATION_ID}/yarn.lock
 
-
-          if [[ "$(git status --porcelain)" == "" ]]; then
+          if [[ -n "$(git status --porcelain | grep -v generated-sources.json)" ]]; then
               echo "there are no changes";
               exit 0;
           fi
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config user.name "Workflow trigger"
-          git add .
+          git add generated-sources.json
           git commit -m "update generated-sources.json"
           git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}
