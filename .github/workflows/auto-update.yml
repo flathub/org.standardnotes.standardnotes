@@ -3,8 +3,10 @@
 name: Auto update
 
 env:
-  BUILDER_TOOLS_URL: https://github.com/flatpak/flatpak-builder-tools
-  BUILDER_TOOLS_BRANCH: master
+  BUILDER_TOOLS_URL: https://github.com/catsout/flatpak-builder-tools
+  BUILDER_TOOLS_BRANCH: yarn2
+  APPLICATION_URL: https://github.com/standardnotes/app
+  APPLICATION_ID: org.standardnotes.standardnotes
   YQ_VERSION: "v4.6.1"
   YQ_BINARY: yq_linux_amd64
 
@@ -13,38 +15,47 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Install dependencies
-        run: |
-          set -e
-          sudo apt install python3-toml python3-aiohttp
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
+          cache: "pip"
 
-      - uses: actions/checkout@v2
-
-      - name: Download flatpak-builder-tools
+      - name: Setup flatpak-builder-tools
         run: |
-          git clone -b ${BUILDER_TOOLS_BRANCH} \
+          git clone --depth=1 -b ${BUILDER_TOOLS_BRANCH} \
                        ${BUILDER_TOOLS_URL} \
-                       builder-tools
+                       ${XDG_CACHE_HOME}/builder-tools
+
+          cd ${XDG_CACHE_HOME}/builder-tools/node
+          pipx install .
 
       # Rather than track the tip of a branch
       - name: Get the current tag
         run: |
           set -e
 
-          mkdir ~/bin
-          wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY} -O ~/bin/yq && \
-          chmod +x ~/bin/yq
+          pip install yq
 
           TAG=`~/bin/yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/app.git") | .tag' org.standardnotes.standardnotes.yml`
 
           echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Download corresponding application repository
+        run: |
+          git clone --depth=1 -b ${TAG} \
+                       ${APPLICATION_URL} \
+                       ${XDG_CACHE_HOME}/${APPLICATION_ID}
 
       - name: Run update
         run: |
           set -e
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config user.name "Workflow trigger"
-          python3 ./update.py standardnotes-git.json --ref ${{ env.TAG }} --generator-arg=--electron-node-headers --generator-arg=-r --generator-arg=yarn --generator-arg=yarn.lock
+
+          flatpak-node-generator --electron-node-headers yarn ${XDG_CACHE_HOME}/${APPLICATION_ID}/yarn.lock
+
           git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}
