@@ -7,6 +7,7 @@ env:
   BUILDER_TOOLS_BRANCH: yarn2
   APPLICATION_URL: https://github.com/standardnotes/app.git
   APPLICATION_ID: org.standardnotes.standardnotes
+  APPLICATION_NAME: standardnotes
   YQ_VERSION: "v4.6.1"
   YQ_BINARY: yq_linux_amd64
   XDG_CACHE_HOME: ${{ github.workspace }}/.cache
@@ -30,7 +31,7 @@ jobs:
           set -e
           sudo apt-get install jq
 
-          TAG=`yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == ${APPLICATION_URL}) | .tag' ${APPLICATION_ID}.yml`
+          TAG=`yq e ".modules.[] | select(.name == ${APPLICATION_NAME}) | .sources.[] | select(.url == ${APPLICATION_URL}) | .tag" ${APPLICATION_ID}.yml`
           echo ${TAG}
           echo "TAG=${TAG}" >> $GITHUB_ENV
 
