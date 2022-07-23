@@ -64,7 +64,7 @@ modules:
       - $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn2-setup.sh
 
       # Translated from yarn setup
-      - yarn install
+      - yarn install --immutable
 
       # From github workflows/desktop.release.reuse.yml
       - |
