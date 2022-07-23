@@ -1,10 +1,10 @@
 app-id: org.standardnotes.standardnotes
 branch: stable
 runtime: org.freedesktop.Platform
-runtime-version: "21.08"
+runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: "21.08"
+base-version: '21.08'
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node16
 # Electron doesn't use a traditional locale format so separate-locales is useless.
@@ -87,16 +87,16 @@ modules:
     sources:
       - type: git
         url: https://github.com/standardnotes/app.git
-        commit: 12168945f1cb9bdf449b2bbc7c4d5724a5e95d7a
+        commit: 36288ad36a18b8c63081f86d3f75c2f2256470c4
         x-checker-data:
           type: anitya
           project-id: 146681
-          tag-template: "@standardnotes/desktop@$version"
+          tag-template: '@standardnotes/desktop@$version'
           stable-only: true
         # Add the flatpak-node-generator generated sources.
         # Note to generate recursively with -r since the repo is composed by submodules
         # No need to generate a separate one for ./app
-        tag: "@standardnotes/desktop@3.23.77"
+        tag: '@standardnotes/desktop@3.23.79'
       - generated-sources.json
   - name: start-script
     buildsystem: simple
