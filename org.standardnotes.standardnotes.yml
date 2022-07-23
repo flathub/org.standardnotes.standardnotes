@@ -27,6 +27,7 @@ modules:
 
   - name: standardnotes
     buildsystem: simple
+
     build-options:
       # Add the node bin directory.
       append-path: /usr/lib/sdk/node16/bin:/app/yarn/bin:/run/build/standardnotes/flatpak-node/chromedrive
@@ -75,16 +76,14 @@ modules:
         yarn run electron-builder $ELECTRON_BUILDER_ARCH_ARGS --linux -c.linux.target=dir \
           --publish=never --c.extraMetadata.version=$(node -p "require('./package.json').version")
 
-      # Remove unneeded files
-      - rm dist/linux*-unpacked/chrome-sandbox
-
-      # Copy the resulting, unpacked directory to /app.
-      - cp -r dist/linux*-unpacked /app/standardnotes
-
-      # Retire this at some point when an SVG is available
-      - for size in 256 512; do [[ -e "app/icon/Icon-${size}x${size}.png" ]] && install
-        -Dm644 "app/icon/Icon-${size}x${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
-        done
+      - |
+        cd packages/desktop
+        rm dist/linux*-unpacked/chrome-sandbox
+        cp -r dist/linux*-unpacked /app/standardnotes
+        for size in 256 512; do
+          [[ -e "app/icon/Icon-${size}x${size}.png" ]] && \
+           install -Dm644 "app/icon/Icon-${size}x${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
+         done
 
     sources:
       - type: git
