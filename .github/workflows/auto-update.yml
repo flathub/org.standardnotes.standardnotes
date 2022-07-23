@@ -5,7 +5,7 @@ name: Auto update
 env:
   BUILDER_TOOLS_URL: https://github.com/catsout/flatpak-builder-tools
   BUILDER_TOOLS_BRANCH: yarn2
-  APPLICATION_URL: https://github.com/standardnotes/app
+  APPLICATION_URL: https://github.com/standardnotes/app.git
   APPLICATION_ID: org.standardnotes.standardnotes
   YQ_VERSION: "v4.6.1"
   YQ_BINARY: yq_linux_amd64
@@ -19,22 +19,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
-          architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
-          cache: pip
+
+      - name: Setup flatpak-builder-tools
+        run: |
+          pipx install "git+${BUILDER_TOOLS_URL}@${BUILDER_TOOLS_BRANCH}#subdirectory=node"
 
       # Rather than track the tip of a branch
       - name: Get the current tag
         run: |
           set -e
-
           sudo apt-get install jq
 
-          TAG=`yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/app.git") | .tag' org.standardnotes.standardnotes.yml`
-
-          echo "TAG=$TAG" >> $GITHUB_ENV
+          TAG=`yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == ${APPLICATION_URL}) | .tag' ${APPLICATION_ID}.yml`
+          echo ${TAG}
+          echo "TAG=${TAG}" >> $GITHUB_ENV
 
       - name: Download corresponding application repository
         run: |
