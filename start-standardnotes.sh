@@ -5,8 +5,8 @@ set -oue pipefail
 export FLATPAK_ID="${FLATPAK_ID:-org.standardnotes.standardnotes}"
 export TMPDIR="${XDG_RUNTIME_DIR}/app/${FLATPAK_ID}"
 
-# Wayland support can be optionally disabled like so:
-# flatpak override --user --env=USE_WAYLAND=0 org.standardnotes.standardnotes
+# Wayland support can be optionally enabled like so:
+# flatpak override --user --env=USE_WAYLAND=1 org.standardnotes.standardnotes
 declare -i USE_WAYLAND="${USE_WAYLAND:-1}"
 declare -i EXIT_CODE=0
 
