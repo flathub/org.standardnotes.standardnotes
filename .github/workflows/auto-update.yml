@@ -3,48 +3,56 @@
 name: Auto update
 
 env:
-  BUILDER_TOOLS_URL: https://github.com/flatpak/flatpak-builder-tools
-  BUILDER_TOOLS_BRANCH: master
+  BUILDER_TOOLS_URL: https://github.com/catsout/flatpak-builder-tools
+  BUILDER_TOOLS_BRANCH: yarn2
+  APPLICATION_URL: https://github.com/standardnotes/app.git
+  APPLICATION_ID: org.standardnotes.standardnotes
+  APPLICATION_NAME: standardnotes
   YQ_VERSION: "v4.6.1"
   YQ_BINARY: yq_linux_amd64
+  XDG_CACHE_HOME: ${{ github.workspace }}/.cache
 
 on:
   push:
 
 jobs:
   update:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Install dependencies
-        run: |
-          set -e
-          sudo apt install python3-toml python3-aiohttp
+      - uses: actions/checkout@v3
 
-      - uses: actions/checkout@v2
-
-      - name: Download flatpak-builder-tools
+      - name: Setup flatpak-builder-tools
         run: |
-          git clone -b ${BUILDER_TOOLS_BRANCH} \
-                       ${BUILDER_TOOLS_URL} \
-                       builder-tools
+          pipx install "git+${BUILDER_TOOLS_URL}@${BUILDER_TOOLS_BRANCH}#subdirectory=node"
 
       # Rather than track the tip of a branch
       - name: Get the current tag
         run: |
           set -e
+          sudo apt-get install jq
 
-          mkdir ~/bin
-          wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/${YQ_BINARY} -O ~/bin/yq && \
-          chmod +x ~/bin/yq
+          TAG=`yq e ".modules.[] | select(.name == \"${APPLICATION_NAME}\") | .sources.[] | select(.url == \"${APPLICATION_URL}\") | .tag" ${APPLICATION_ID}.yml`
+          echo ${TAG}
+          echo "TAG=${TAG}" >> $GITHUB_ENV
 
-          TAG=`~/bin/yq e '.modules.[] | select(.name == "standardnotes") | .sources.[] | select(.url == "https://github.com/standardnotes/app.git") | .tag' org.standardnotes.standardnotes.yml`
-
-          echo "TAG=$TAG" >> $GITHUB_ENV
+      - name: Download corresponding application repository
+        run: |
+          git clone --depth=1 -b ${TAG} \
+                       ${APPLICATION_URL} \
+                       ${XDG_CACHE_HOME}/${APPLICATION_ID}
 
       - name: Run update
         run: |
           set -e
+
+          flatpak-node-generator --electron-node-headers yarn ${XDG_CACHE_HOME}/${APPLICATION_ID}/yarn.lock
+
+          if [[ -n "$(git status --porcelain | grep -v generated-sources.json)" ]]; then
+              echo "there are no changes";
+              exit 0;
+          fi
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config user.name "Workflow trigger"
-          python3 ./update.py standardnotes-git.json --ref ${{ env.TAG }} --generator-arg=--electron-node-headers --generator-arg=-r --generator-arg=yarn --generator-arg=yarn.lock
+          git add generated-sources.json
+          git commit -m "update generated-sources.json"
           git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}
