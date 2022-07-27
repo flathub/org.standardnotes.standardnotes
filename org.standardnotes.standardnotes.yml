@@ -87,7 +87,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/standardnotes/app.git
-        commit: 6f7dfaa9f690eb2ca1be46c08d3b455e9d435e20
+        commit: 5ec8e9978137b809a1ebb892ef26ae3b7f892980
         x-checker-data:
           type: anitya
           project-id: 146681
@@ -96,7 +96,7 @@ modules:
         # Add the flatpak-node-generator generated sources.
         # Note to generate recursively with -r since the repo is composed by submodules
         # No need to generate a separate one for ./app
-        tag: '@standardnotes/desktop@3.23.80'
+        tag: '@standardnotes/desktop@3.23.82'
       - generated-sources.json
   - name: start-script
     buildsystem: simple
