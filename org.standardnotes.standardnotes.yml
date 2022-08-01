@@ -87,7 +87,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/standardnotes/app.git
-        commit: 5ec8e9978137b809a1ebb892ef26ae3b7f892980
+        commit: 3116ae388323d7cf2146d02e5aa8a6559ab02b5f
         x-checker-data:
           type: anitya
           project-id: 146681
