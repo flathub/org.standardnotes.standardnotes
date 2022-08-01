@@ -96,7 +96,7 @@ modules:
         # Add the flatpak-node-generator generated sources.
         # Note to generate recursively with -r since the repo is composed by submodules
         # No need to generate a separate one for ./app
-        tag: '@standardnotes/desktop@3.23.82'
+        tag: '@standardnotes/desktop@3.23.83'
       - generated-sources.json
   - name: start-script
     buildsystem: simple
