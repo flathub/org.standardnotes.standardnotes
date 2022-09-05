@@ -91,10 +91,10 @@
 
   <launchable type="desktop-id">org.standardnotes.standardnotes.desktop</launchable>
 
-  <url type="homepage">https://standardnotes.org/</url>
-  <url type="bugtracker">https://github.com/standardnotes/desktop/issues/</url>
+  <url type="homepage">https://standardnotes.com</url>
+  <url type="bugtracker">https://github.com/standardnotes/app/issues</url>
   <url type="donation">https://github.com/sponsors/standardnotes</url>
-  <url type="help">https://standardnotes.org/help</url>
+  <url type="help">https://standardnotes.com/help</url>
 
   <content_rating type="oars-1.1"/>
 
