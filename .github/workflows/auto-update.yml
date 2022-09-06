@@ -30,7 +30,6 @@ jobs:
       - name: Get the current tag
         run: |
           set -ev
-          sudo apt-get install jq
 
           TAG=`yq e ".modules.[] | select(.name == \"${APPLICATION_NAME}\") | .sources.[] | select(.url == \"${APPLICATION_URL}\") | .tag" ${APPLICATION_ID}.yml`
           echo ${TAG}
