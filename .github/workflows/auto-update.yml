@@ -4,7 +4,8 @@ name: Auto update
 
 env:
   BUILDER_TOOLS_URL: https://github.com/catsout/flatpak-builder-tools
-  BUILDER_TOOLS_BRANCH: yarn2
+  # newer version in `yarn2` branch causes error
+  BUILDER_TOOLS_BRANCH: afc69116fcb909c1786cd49a0650f914515877ef
   APPLICATION_URL: https://github.com/standardnotes/app.git
   APPLICATION_ID: org.standardnotes.standardnotes
   APPLICATION_NAME: standardnotes
