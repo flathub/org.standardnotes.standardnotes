@@ -4,7 +4,8 @@ name: Auto update
 
 env:
   BUILDER_TOOLS_URL: https://github.com/catsout/flatpak-builder-tools
-  BUILDER_TOOLS_BRANCH: yarn2
+  # newer version in `yarn2` branch causes error
+  BUILDER_TOOLS_BRANCH: afc69116fcb909c1786cd49a0650f914515877ef
   APPLICATION_URL: https://github.com/standardnotes/app.git
   APPLICATION_ID: org.standardnotes.standardnotes
   APPLICATION_NAME: standardnotes
@@ -47,7 +48,7 @@ jobs:
 
           flatpak-node-generator --electron-node-headers yarn ${XDG_CACHE_HOME}/${APPLICATION_ID}/yarn.lock
 
-          if [[ -n "$(git status --porcelain | grep generated-sources.json)" ]]; then
+          if [[ -n "$(git status --porcelain --untracked-files=no | grep --invert-match generated-sources.json)" ]]; then
               echo "there are no changes";
               exit 0;
           fi
