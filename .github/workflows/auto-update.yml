@@ -18,7 +18,7 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
 
@@ -31,7 +31,7 @@ jobs:
         run: |
           set -ev
 
-          TAG=`yq e ".modules.[] | select(.name == \"${APPLICATION_NAME}\") | .sources.[] | select(.url == \"${APPLICATION_URL}\") | .tag" ${APPLICATION_ID}.yml`
+          TAG=`yq ".modules.[] | select(.name == \"${APPLICATION_NAME}\") | .sources.[] | select(.url == \"${APPLICATION_URL}\") | .tag" ${APPLICATION_ID}.yml`
           echo ${TAG}
           echo "TAG=${TAG}" >> $GITHUB_ENV
 
