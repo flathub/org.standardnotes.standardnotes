@@ -18,7 +18,7 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
 
@@ -29,10 +29,9 @@ jobs:
       # Rather than track the tip of a branch
       - name: Get the current tag
         run: |
-          set -e
-          sudo apt-get install jq
+          set -ev
 
-          TAG=`yq e ".modules.[] | select(.name == \"${APPLICATION_NAME}\") | .sources.[] | select(.url == \"${APPLICATION_URL}\") | .tag" ${APPLICATION_ID}.yml`
+          TAG=`yq ".modules.[] | select(.name == \"${APPLICATION_NAME}\") | .sources.[] | select(.url == \"${APPLICATION_URL}\") | .tag" ${APPLICATION_ID}.yml`
           echo ${TAG}
           echo "TAG=${TAG}" >> $GITHUB_ENV
 
@@ -44,12 +43,12 @@ jobs:
 
       - name: Run update
         run: |
-          set -e
+          set -ev
 
           flatpak-node-generator --electron-node-headers yarn ${XDG_CACHE_HOME}/${APPLICATION_ID}/yarn.lock
 
-          if [[ -n "$(git status --porcelain --untracked-files=no | grep --invert-match generated-sources.json)" ]]; then
-              echo "there are no changes";
+          if [[ "$(git status --porcelain -- generated-sources.json)" == "" ]]; then
+              echo "there are no changes in `generated-sources.json`";
               exit 0;
           fi
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
