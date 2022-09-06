@@ -29,7 +29,7 @@ jobs:
       # Rather than track the tip of a branch
       - name: Get the current tag
         run: |
-          set -e
+          set -ev
           sudo apt-get install jq
 
           TAG=`yq e ".modules.[] | select(.name == \"${APPLICATION_NAME}\") | .sources.[] | select(.url == \"${APPLICATION_URL}\") | .tag" ${APPLICATION_ID}.yml`
@@ -44,7 +44,7 @@ jobs:
 
       - name: Run update
         run: |
-          set -e
+          set -ev
 
           flatpak-node-generator --electron-node-headers yarn ${XDG_CACHE_HOME}/${APPLICATION_ID}/yarn.lock
 
