@@ -47,8 +47,8 @@ jobs:
 
           flatpak-node-generator --electron-node-headers yarn ${XDG_CACHE_HOME}/${APPLICATION_ID}/yarn.lock
 
-          if [[ -n "$(git status --porcelain --untracked-files=no | grep --invert-match generated-sources.json)" ]]; then
-              echo "there are no changes";
+          if [[ "$(git status --porcelain -- generated-sources.json)" == "" ]]; then
+              echo "there are no changes in `generated-sources.json`";
               exit 0;
           fi
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
