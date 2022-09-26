@@ -1,12 +1,9 @@
 app-id: org.standardnotes.standardnotes
-branch: stable
 runtime: org.freedesktop.Platform
 runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
 base-version: '22.08'
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.node16
 # Electron doesn't use a traditional locale format so separate-locales is useless.
 separate-locales: false
 command: start-standardnotes
@@ -24,80 +21,37 @@ finish-args:
   - --persist=Standard Notes Backups
 modules:
   - shared-modules/libsecret/libsecret.json
-
   - name: standardnotes
     buildsystem: simple
-    build-options:
-      # Add the node bin directory.
-      append-path: /usr/lib/sdk/node16/bin:/app/yarn/bin:/run/build/standardnotes/flatpak-node/chromedrive
-      env:
-        # Don't add ELECTRON_CACHE
-        XDG_CACHE_HOME: /run/build/standardnotes/flatpak-node/cache
-        npm_config_nodedir: /usr/lib/sdk/node16
-        npm_config_loglevel: verbose
-        # https://stackoverflow.com/questions/25146976/can-i-get-npm-gyp-to-use-ccache
-        CXX: ccache g++
-        CC: ccache gcc
-      arch:
-        # https://github.com/sass/node-sass/issues/3033#issuecomment-763180778
-        # The architecture of Electron, see https://electronjs.org/docs/tutorial/support#supported-platforms
-        # for supported architectures.
-        i386:
-          env:
-            npm_config_arch: ia32
-            npm_config_target_arch: ia32
-        x86_64:
-          env:
-            npm_config_arch: x64
-            npm_config_target_arch: x64
-        arm:
-          env:
-            npm_config_arch: armv7l
-            npm_config_target_arch: armv7l
-        aarch64:
-          env:
-            npm_config_arch: arm64
-            npm_config_target_arch: arm64
-
     build-commands:
-      # https://github.com/flatpak/flatpak-builder-tools/pull/252
-      - $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn2-setup.sh
-
-      # Translated from yarn setup
-      - yarn install --immutable
-
-      # From github workflows/desktop.release.reuse.yml
-      - |
-        . flatpak-node/electron-builder-arch-args.sh
-        cd packages/desktop
-        yarn build:desktop
-        yarn run webpack --config desktop.webpack.prod.js
-        yarn run electron-builder $ELECTRON_BUILDER_ARCH_ARGS --linux -c.linux.target=dir \
-          --publish=never --c.extraMetadata.version=$(node -p "require('./package.json').version")
-
-      - |
-        cd packages/desktop
-        rm dist/linux*-unpacked/chrome-sandbox
-        cp -r dist/linux*-unpacked /app/standardnotes
-        for size in 256 512; do
-          [[ -e "app/icon/Icon-${size}x${size}.png" ]] && \
-           install -Dm644 "app/icon/Icon-${size}x${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png";
-         done
-
+      - ar x standard-notes.deb
+      - tar xf data.tar.xz
+      - rm 'opt/Standard Notes/chrome-sandbox'
+      - mv 'opt/Standard Notes' "${FLATPAK_DEST}/standardnotes"
+      - install -Dm644 usr/share/icons/hicolor/512x512/apps/standard-notes.png "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
+      - install -Dm644 usr/share/applications/standard-notes.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+      - desktop-file-edit --set-key=Exec --set-value='start-standardnotes %U' --set-icon=${FLATPAK_ID} "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
     sources:
-      - type: git
-        url: https://github.com/standardnotes/app.git
-        commit: 2b830c0faef136c55e0dba50e557c91339f2e043
+      - type: file
+        dest-filename: standard-notes.deb
+        only-arches: [x86_64]
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.23.157/standard-notes-3.23.157-linux-amd64.deb
+        sha256: f755166342274792fac5c303321a5bbfe86fcdd63f011ff7c55a904c252583ce
         x-checker-data:
           type: anitya
           project-id: 146681
-          tag-template: '@standardnotes/desktop@$version'
+          url-template: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%40$version/standard-notes-$version-linux-amd64.deb
           stable-only: true
-        # Add the flatpak-node-generator generated sources.
-        # Note to generate recursively with -r since the repo is composed by submodules
-        # No need to generate a separate one for ./app
-        tag: '@standardnotes/desktop@3.23.115'
-      - generated-sources.json
+      - type: file
+        dest-filename: standard-notes.deb
+        only-arches: [aarch64]
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.23.157/standard-notes-3.23.157-linux-arm64.deb
+        sha256: 268fe28085e418d103e1065450d81f1cc75166f366b118d67ad449492a0624bd
+        x-checker-data:
+          type: anitya
+          project-id: 146681
+          url-template: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%40$version/standard-notes-$version-linux-arm64.deb
+          stable-only: true
   - name: start-script
     buildsystem: simple
     build-commands:
@@ -113,10 +67,3 @@ modules:
     sources:
       - type: file
         path: org.standardnotes.standardnotes.metainfo.xml
-  - name: desktop-entry
-    buildsystem: simple
-    build-commands:
-      - install -Dm644 org.standardnotes.standardnotes.desktop /app/share/applications/$FLATPAK_ID.desktop
-    sources:
-      - type: file
-        path: org.standardnotes.standardnotes.desktop
