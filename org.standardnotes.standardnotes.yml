@@ -36,8 +36,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [x86_64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.23.178/standard-notes-3.23.178-linux-amd64.deb
-        sha256: 3ccd61e3d8e35169cb00845780163102f79f003ec61b5d4e0f3c08b1a4bab749
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.23.181/standard-notes-3.23.181-linux-amd64.deb
+        sha256: 0a0e459f4ebe8c2d2b71e7d61c8a4d673554ad786d84566ee89a11c485241e02
         x-checker-data:
           type: anitya
           project-id: 146681
@@ -46,8 +46,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [aarch64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.23.178/standard-notes-3.23.178-linux-arm64.deb
-        sha256: 117ba8e2f761720f0c9c564b5432ccd9a49b93425d2b705cb43a7b351693b878
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.23.181/standard-notes-3.23.181-linux-arm64.deb
+        sha256: b04cf36193f973006a25029d5a18005fe07d85fd1a2e24ffdaeec51a10d9dea9
         x-checker-data:
           type: anitya
           project-id: 146681
