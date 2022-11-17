@@ -36,8 +36,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [x86_64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.23.293/standard-notes-3.23.293-linux-amd64.deb
-        sha256: b025d9683be7942e05f95bb34e1f7e0f6476e555aa2254d2305257f9a4719639
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.23.300/standard-notes-3.23.300-linux-amd64.deb
+        sha256: b8be137ab5c34a3e7c6d55c233cf8d71a560c85708edf5cbd76f29f12292f4b8
         x-checker-data:
           type: anitya
           project-id: 146681
