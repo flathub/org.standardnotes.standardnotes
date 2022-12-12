@@ -6,17 +6,6 @@
   <summary>A simple and private place for your notes, thoughts, and life's work</summary>
 
   <developer_name>Standard Notes Ltd.</developer_name>
-  <agreement type="privacy" version_id="1.0">
-    <agreement_section>
-      <name>What we collect and how we use the collected data</name>
-      <description>
-        <p>We respect your privacy.</p>
-        <p>We do not under any form collect, store, or share any personal imformation from users of the app.</p>
-        <p>If you use a self-hosted or third-party RSS service with this app, the service may be able to see your activities through the API.</p>
-        <p>A temporary cookies session that would be destoyed when the app closes is used to minimize third-party tracking when displaying third party contents.</p>
-      </description>
-    </agreement_section>
-  </agreement>
 
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>AGPL-3.0</project_license>
@@ -86,7 +75,7 @@
       <li>Powerful cloud tools including daily backups of your encrypted data delivered to your email inbox every day, or
           backed up to your cloud provider (like Dropbox and Google Drive).</li>
     </ul>
-    <p>You can learn more about Extended at standardnotes.org/extended.</p>
+    <p>You can learn more about Extended at standardnotes.com/extended.</p>
   </description>
 
   <launchable type="desktop-id">org.standardnotes.standardnotes.desktop</launchable>
@@ -95,21 +84,16 @@
   <url type="bugtracker">https://github.com/standardnotes/app/issues</url>
   <url type="donation">https://github.com/sponsors/standardnotes</url>
   <url type="help">https://standardnotes.com/help</url>
+  <url type="vcs-browser">https://github.com/standardnotes/app</url>
 
   <content_rating type="oars-1.1"/>
 
   <screenshots>
     <screenshot type="default">
-      <image>https://dashboard.snapcraft.io/site_media/appmedia/2019/11/Screenshot_1.png</image>
+      <image>https://standardnotes.com/static/more-note-types-screenshot-7daccfea5a21aefb6bbd19b85564df8e.png</image>
     </screenshot>
     <screenshot>
-      <image>https://dashboard.snapcraft.io/site_media/appmedia/2019/11/Screenshot_2.png</image>
-    </screenshot>
-    <screenshot>
-      <image>https://dashboard.snapcraft.io/site_media/appmedia/2019/11/Screenshot_3.png</image>
-    </screenshot>
-    <screenshot>
-      <image>https://dashboard.snapcraft.io/site_media/appmedia/2019/11/Screenshot_4.png</image>
+      <image>https://standardnotes.com/static/midnight-theme-screenshot-116903d8e0d92a97b7ff17813be811f0.png</image>
     </screenshot>
   </screenshots>
 
