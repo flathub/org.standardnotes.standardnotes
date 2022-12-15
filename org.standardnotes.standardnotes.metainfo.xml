@@ -86,14 +86,20 @@
   <url type="help">https://standardnotes.com/help</url>
   <url type="vcs-browser">https://github.com/standardnotes/app</url>
 
-  <content_rating type="oars-1.1"/>
+  <content_rating type="oars-1.1" />
 
   <screenshots>
     <screenshot type="default">
-      <image>https://standardnotes.com/static/more-note-types-screenshot-7daccfea5a21aefb6bbd19b85564df8e.png</image>
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2019/11/Screenshot_1.png</image>
     </screenshot>
     <screenshot>
-      <image>https://standardnotes.com/static/midnight-theme-screenshot-116903d8e0d92a97b7ff17813be811f0.png</image>
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2019/11/Screenshot_2.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2019/11/Screenshot_3.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://dashboard.snapcraft.io/site_media/appmedia/2019/11/Screenshot_4.png</image>
     </screenshot>
   </screenshots>
 
