@@ -90,7 +90,7 @@
   <url type="help">https://standardnotes.com/help</url>
   <url type="vcs-browser">https://github.com/standardnotes/app</url>
 
-  <content_rating type="oars-1.1" />
+  <content_rating type="oars-1.1"/>
 
   <screenshots>
     <screenshot type="default">
@@ -108,6 +108,7 @@
   </screenshots>
 
   <releases>
+    <release version="3.126.4" date="2022-12-15"/>
     <release version="3.126.0" date="2022-12-13"/>
     <release version="3.125.0" date="2022-12-08"/>
     <release version="3.123.0" date="2022-12-08"/>
