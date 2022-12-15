@@ -8,7 +8,7 @@ base-version: '22.08'
 separate-locales: false
 command: start-standardnotes
 finish-args:
-  - --device=dri
+  - --device=all
   - --filesystem=xdg-download
   - --filesystem=xdg-documents
   - --filesystem=xdg-run/keyring
@@ -36,8 +36,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [x86_64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.125.0/standard-notes-3.125.0-linux-amd64.deb
-        sha256: 90fcc36b53fa0c433cd1cd85703f2da07e5adb635f00f037be4060fcad1261d1
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.126.0/standard-notes-3.126.0-linux-amd64.deb
+        sha256: d4f07b48f174175181300e5bbe834fa3fdfb53e4edd44081a5c8078c06785c7e
         x-checker-data:
           type: anitya
           project-id: 146681
@@ -46,8 +46,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [aarch64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.125.0/standard-notes-3.125.0-linux-arm64.deb
-        sha256: 33368355ea92808fbac371f10f82c79f65a00b884ad74206fc0d02e6a9d61617
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.126.0/standard-notes-3.126.0-linux-arm64.deb
+        sha256: 0364587cfd58ab4b6df9b0b6582ff858eb2300478f295edcfb6193dda1688183
         x-checker-data:
           type: anitya
           project-id: 146681
