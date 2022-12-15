@@ -8,7 +8,7 @@ base-version: '22.08'
 separate-locales: false
 command: start-standardnotes
 finish-args:
-  - --device=dri
+  - --device=all
   - --filesystem=xdg-download
   - --filesystem=xdg-documents
   - --filesystem=xdg-run/keyring
