@@ -1,11 +1,9 @@
 app-id: org.standardnotes.standardnotes
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: "22.08"
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: '22.08'
-# Electron doesn't use a traditional locale format so separate-locales is useless.
-separate-locales: false
+base-version: "22.08"
 command: start-standardnotes
 finish-args:
   - --device=all
@@ -24,10 +22,20 @@ modules:
   - name: standardnotes
     buildsystem: simple
     build-commands:
-      - ar x standard-notes.deb
-      - tar xf data.tar.xz
-      - rm 'opt/Standard Notes/chrome-sandbox'
-      - mv 'opt/Standard Notes' "${FLATPAK_DEST}/standardnotes"
+      - bsdtar -Oxf standard-notes.deb data.tar.xz | bsdtar -xf -
+      - mv "opt/Standard Notes" ${FLATPAK_DEST}/standardnotes
+      - rm ${FLATPAK_DEST}/standardnotes/chrome-sandbox
+
+      # To allow separate locales
+      # https://searchfox.org/mozilla-central/rev/8a4f55bc09ffc5c25dcb4586c51ae4a9fee77b4c/taskcluster/docker/firefox-flatpak/runme.sh#131-133
+      - |
+        for lang in ${FLATPAK_DEST}/standardnotes/locales/*.pak
+        do
+          locale="$(basename -s .pak $lang)"
+          install -Dm644 -t "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/" "$lang"
+        done
+        ln -sf "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/$(basename $lang)" "${FLATPAK_DEST}/standardnotes/locales/$(basename $lang)"
+
       - install -Dm644 usr/share/icons/hicolor/512x512/apps/standard-notes.png "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
       - install -Dm644 usr/share/applications/standard-notes.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
       - desktop-file-edit --set-key=Exec --set-value='start-standardnotes %U' --set-icon=${FLATPAK_ID}
