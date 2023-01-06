@@ -33,8 +33,8 @@ modules:
         do
           locale="$(basename -s .pak $lang)"
           install -Dm644 -t "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/" "$lang"
+          ln -sf "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/$(basename $lang)" "${FLATPAK_DEST}/standardnotes/locales/$(basename $lang)"
         done
-        ln -sf "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/$(basename $lang)" "${FLATPAK_DEST}/standardnotes/locales/$(basename $lang)"
 
       - install -Dm644 usr/share/icons/hicolor/512x512/apps/standard-notes.png "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
       - install -Dm644 usr/share/applications/standard-notes.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
