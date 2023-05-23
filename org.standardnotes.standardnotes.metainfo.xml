@@ -108,6 +108,7 @@
   </screenshots>
 
   <releases>
+    <release version="3.160.10" date="2023-05-23"/>
     <release version="3.160.6" date="2023-05-22"/>
     <release version="3.160.5" date="2023-05-19"/>
     <release version="3.160.3" date="2023-05-18"/>
