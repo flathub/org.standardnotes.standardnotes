@@ -6,9 +6,7 @@ base: org.electronjs.Electron2.BaseApp
 base-version: '22.08'
 command: start-standardnotes
 finish-args:
-  - --device=all
-  - --filesystem=xdg-download
-  - --filesystem=xdg-documents
+  - --device=all # camera access for moments
   - --filesystem=xdg-run/keyring
   - --share=ipc
   - --share=network
