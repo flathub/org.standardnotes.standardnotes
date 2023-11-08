@@ -8,16 +8,16 @@ command: start-standardnotes
 finish-args:
   # camera access for moments
   - --device=all
-  - --filesystem=xdg-run/keyring
-  # for backups
-  - --filesystem=xdg-documents
   - --share=ipc
   - --share=network
   - --socket=wayland
   - --socket=fallback-x11
   - --talk-name=org.freedesktop.Notifications
   - --talk-name=org.freedesktop.secrets
+  # Legacy text backup directory: https://github.com/standardnotes/app/blob/6a7c5277f8a957944fea59ce146a7aecdaa52da7/packages/desktop/app/javascripts/Main/FileBackups/FileBackupsManager.ts#L105
   - --persist=Standard Notes Backups
+  # For backups
+  - --persist=Documents
   - --env=USE_WAYLAND=1
   - --env=XCURSOR_PATH=~/.icons:/app/share/icons:/icons:/run/host/user-share/icons:/run/host/share/icons
 modules:
