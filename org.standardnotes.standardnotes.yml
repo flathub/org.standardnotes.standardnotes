@@ -1,9 +1,9 @@
 app-id: org.standardnotes.standardnotes
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: &runtime-version '23.08' 
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: '22.08'
+base-version: *runtime-version
 command: start-standardnotes
 finish-args:
   # camera access for moments
