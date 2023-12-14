@@ -41,14 +41,13 @@ modules:
 
       - install -Dm644 usr/share/icons/hicolor/512x512/apps/standard-notes.png "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
       - install -Dm644 usr/share/applications/standard-notes.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
-      - desktop-file-edit --set-key=Exec --set-value='start-standardnotes %U' --set-icon=${FLATPAK_ID}
-        "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+      - desktop-file-edit --set-key=Exec --set-value='start-standardnotes %U' --set-icon=${FLATPAK_ID} "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
     sources:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [x86_64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.183.17/standard-notes-3.183.17-linux-amd64.deb
-        sha256: c224e0e4ecb069d5a36eae00bfd3ddcb3ee3b5628b5f5cc57705b3bb92a68bd7
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.183.23/standard-notes-3.183.23-linux-amd64.deb
+        sha256: 594e0907a2c4d685f83411d839803c6a20c2efac9c1a51512fa92f481ebe938e
         x-checker-data:
           type: anitya
           project-id: 146681
@@ -57,8 +56,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [aarch64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.183.17/standard-notes-3.183.17-linux-arm64.deb
-        sha256: d3a859ed9b56cd81687623a3f1e7054dedb155afa02c911cdfa7516c0677a421
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.183.23/standard-notes-3.183.23-linux-arm64.deb
+        sha256: bdc9d70a5859f9540fdac1d3cd6ffa304d9d58efe5329279406fac8484945169
         x-checker-data:
           type: anitya
           project-id: 146681
