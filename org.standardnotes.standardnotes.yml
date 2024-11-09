@@ -18,7 +18,7 @@ finish-args:
   - --persist=Standard Notes Backups
   # For backups
   - --persist=Documents
-  - --env=USE_WAYLAND=1
+  - --env=ELECTRON_OZONE_PLATFORM_HINT=auto
   - --env=XCURSOR_PATH=~/.icons:/app/share/icons:/icons:/run/host/user-share/icons:/run/host/share/icons
 modules:
   - shared-modules/libsecret/libsecret.json
@@ -27,7 +27,6 @@ modules:
     build-commands:
       - bsdtar -Oxf standard-notes.deb data.tar.xz | bsdtar -xf -
       - mv "opt/Standard Notes" ${FLATPAK_DEST}/standardnotes
-      - rm ${FLATPAK_DEST}/standardnotes/chrome-sandbox
 
       # To allow separate locales
       # https://searchfox.org/mozilla-central/rev/8a4f55bc09ffc5c25dcb4586c51ae4a9fee77b4c/taskcluster/docker/firefox-flatpak/runme.sh#131-133
