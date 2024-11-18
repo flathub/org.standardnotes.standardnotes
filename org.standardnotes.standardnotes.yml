@@ -14,6 +14,8 @@ finish-args:
   - --socket=fallback-x11
   - --talk-name=org.freedesktop.Notifications
   - --talk-name=org.freedesktop.secrets
+  # Tray icon
+  - --talk-name=org.kde.StatusNotifierWatcher
   # Legacy text backup directory: https://github.com/standardnotes/app/blob/6a7c5277f8a957944fea59ce146a7aecdaa52da7/packages/desktop/app/javascripts/Main/FileBackups/FileBackupsManager.ts#L105
   - --persist=Standard Notes Backups
   # For backups
