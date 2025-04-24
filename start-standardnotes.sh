@@ -5,4 +5,4 @@ set -oue pipefail
 export FLATPAK_ID="${FLATPAK_ID:-org.standardnotes.standardnotes}"
 export TMPDIR="${XDG_RUNTIME_DIR}/app/${FLATPAK_ID}"
 
-zypak-wrapper /app/standardnotes/standard-notes $@
+zypak-wrapper /app/standardnotes/standard-notes --enable-wayland-ime --wayland-text-input-version=3 $@
