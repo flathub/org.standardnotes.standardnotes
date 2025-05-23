@@ -81,8 +81,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [x86_64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.196.6/standard-notes-3.196.6-linux-amd64.deb
-        sha256: 41021e3ef8552d82a6250f59e6b119ee2f1db2b7c1a70ebaf0272b43e1ef2e97
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.196.7/standard-notes-3.196.7-linux-amd64.deb
+        sha256: 1b98b58541f8cd7ee271d7e4b2abff6133cc41f84ac6f566f0a82eb48b6e92a7
         x-checker-data:
           type: anitya
           project-id: 146681
@@ -91,8 +91,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [aarch64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.196.6/standard-notes-3.196.6-linux-arm64.deb
-        sha256: 1a70ad472c6556cb4aeb94be421e7218fce239bc96e976176b20bbdfc9af48f7
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.196.7/standard-notes-3.196.7-linux-arm64.deb
+        sha256: 2ecaee09dd5837ff0cb1267c4949a8509762078c5ee4f46610ea19aeecc9d0ca
         x-checker-data:
           type: anitya
           project-id: 146681
