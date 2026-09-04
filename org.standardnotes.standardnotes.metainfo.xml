@@ -106,8 +106,11 @@
   </screenshots>
 
   <releases>
-    <release version="3.202.2" date="2026-09-03">
+    <release version="3.202.3" date="2026-09-04">
       <description></description>
+    </release>
+    <release version="3.202.2" date="2026-09-03">
+      <description/>
     </release>
     <release version="3.202.1" date="2026-08-26">
       <description/>
