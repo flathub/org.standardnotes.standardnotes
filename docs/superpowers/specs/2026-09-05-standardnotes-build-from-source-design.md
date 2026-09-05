@@ -130,7 +130,7 @@ jobs:
 
     steps:
       - name: Check out branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.head_ref || github.ref }}
           fetch-depth: 2
@@ -140,7 +140,7 @@ jobs:
         run: git fetch --no-tags origin "${{ github.base_ref }}" --depth=1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
