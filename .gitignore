@@ -10,6 +10,7 @@ standard-notes/
 .DS_Store
 Thumbs.db
 *.iml
+.worktrees/
 
 #
 # Includes
