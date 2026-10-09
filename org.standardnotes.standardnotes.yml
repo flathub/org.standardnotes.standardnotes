@@ -1,6 +1,6 @@
 app-id: org.standardnotes.standardnotes
 runtime: org.freedesktop.Platform
-runtime-version: &runtime-version '25.08'
+runtime-version: &runtime-version '26.08'
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
 base-version: *runtime-version
@@ -46,8 +46,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [x86_64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.202.7/standard-notes-3.202.7-linux-amd64.deb
-        sha256: d4ae080b2f5dba594b67a7180bf7b81a254a7b62500e2ea86af031dfc0b988f1
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.202.9/standard-notes-3.202.9-linux-amd64.deb
+        sha256: 584f1465678683651aa8600bbc77e404e896faa0d67f8546f8bec7fee9570219
         x-checker-data:
           type: anitya
           project-id: 146681
@@ -56,8 +56,8 @@ modules:
       - type: file
         dest-filename: standard-notes.deb
         only-arches: [aarch64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.202.7/standard-notes-3.202.7-linux-arm64.deb
-        sha256: 4e2f3ffd5001a17b103b879b2a3229189e0ce885bd9ef19192aa39c64d6141e4
+        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.202.9/standard-notes-3.202.9-linux-arm64.deb
+        sha256: 73b39391e513e3e5cf909be5a0c0c47dcfdeb3e81254b52cdd11d2eab5cd4abb
         x-checker-data:
           type: anitya
           project-id: 146681
