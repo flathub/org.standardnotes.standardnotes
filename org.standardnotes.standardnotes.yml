@@ -4,6 +4,8 @@ runtime-version: &runtime-version '26.08'
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
 base-version: *runtime-version
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node22
 command: start-standardnotes
 finish-args:
   # camera access for moments
@@ -23,46 +25,90 @@ finish-args:
   - --env=ELECTRON_OZONE_PLATFORM_HINT=auto
   - --env=XCURSOR_PATH=~/.icons:/app/share/icons:/icons:/run/host/user-share/icons:/run/host/share/icons
 modules:
+  - name: dbus-run-session
+    buildsystem: cmake
+    cleanup: ['*']
+    sources:
+      - type: archive
+        url: https://gitlab.freedesktop.org/dbus/dbus/-/archive/dbus-1.16.2/dbus-dbus-1.16.2.tar.gz
+        sha256: d77cc71acd93e85f2bd2a6fe3a40e5bd023519e3e9fa9b5361e7109f42b74060
+        x-checker-data:
+          type: anitya
+          project-id: 5356
+          url-template: https://gitlab.freedesktop.org/dbus/dbus/-/archive/dbus-$version/dbus-dbus-$version.tar.gz
+
   - name: standardnotes
     buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/node22/bin
+      env:
+        XDG_CACHE_HOME: /run/build/standardnotes/flatpak-node/cache
+        npm_config_nodedir: /usr/lib/sdk/node22
+        # Offline Yarn Berry settings
+        YARN_ENABLE_INLINE_BUILDS: '1'
+        YARN_ENABLE_TELEMETRY: '0'
+        YARN_ENABLE_NETWORK: '0'
+        YARN_ENABLE_GLOBAL_CACHE: '0'
+        YARN_GLOBAL_FOLDER: /run/build/standardnotes/flatpak-node/yarn-berry
+        # Electron builder offline cache
+        electron_config_cache: /run/build/standardnotes/flatpak-node/cache/electron
+        ELECTRON_BUILDER_OFFLINE: 'true'
     build-commands:
-      - bsdtar -Oxf standard-notes.deb data.tar.xz | bsdtar -xf -
-      - mv "opt/Standard Notes" ${FLATPAK_DEST}/standardnotes
+      # 1. Install dependencies offline from pre-cached Yarn Berry sources
+      - yarn install --immutable
 
-      # To allow separate locales
-      # https://searchfox.org/mozilla-central/rev/8a4f55bc09ffc5c25dcb4586c51ae4a9fee77b4c/taskcluster/docker/firefox-flatpak/runme.sh#131-133
+      # 2. Rebuild native modules against the mounted Node 22 SDK headers
+      - yarn workspace @standardnotes/desktop rebuild:home-server
+
+      # 3. Build workspace packages (SNJS, utils, web) followed by desktop bundle
+      - yarn build:desktop
+      - cd packages/desktop && yarn run webpack --config desktop.webpack.prod.js
+
+      # 4. Package Linux directory target using electron-builder
       - |
-        for lang in ${FLATPAK_DEST}/standardnotes/locales/*.pak
-        do
-          locale="$(basename -s .pak $lang)"
-          install -Dm644 -t "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/" "$lang"
-          ln -sf "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/$(basename $lang)" "${FLATPAK_DEST}/standardnotes/locales/$(basename $lang)"
-        done
+        case "${FLATPAK_ARCH}" in
+          x86_64)  ARCH_FLAG="--x64" ;;
+          aarch64) ARCH_FLAG="--arm64" ;;
+          *) echo "Unsupported architecture ${FLATPAK_ARCH}" && exit 1 ;;
+        esac
+        cd packages/desktop
+        yarn run electron-builder --linux --dir ${ARCH_FLAG} \
+          --publish=never -c.extraMetadata.version=$(node -p "require('./package.json').version")
 
-      - install -Dm644 usr/share/icons/hicolor/512x512/apps/standard-notes.png "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
-      - install -Dm644 usr/share/applications/standard-notes.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
-      - desktop-file-edit --set-key=Exec --set-value='start-standardnotes %U' --set-icon=${FLATPAK_ID} "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+      # 5. Install application files and desktop assets
+      - |
+        cd packages/desktop
+        rm -f dist/linux*-unpacked/chrome-sandbox
+        cp -r dist/linux*-unpacked ${FLATPAK_DEST}/standardnotes
+        for size in 256 512; do
+          if [ -f "app/icon/Icon-${size}x${size}.png" ]; then
+            install -Dm644 "app/icon/Icon-${size}x${size}.png" \
+              "${FLATPAK_DEST}/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png"
+          fi
+        done
+        if [ -f "usr/share/applications/standard-notes.desktop" ]; then
+          install -Dm644 usr/share/applications/standard-notes.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+        else
+          install -Dm644 ../../org.standardnotes.standardnotes.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+        fi
+        desktop-file-edit --set-key=Exec --set-value='start-standardnotes %U' --set-icon=${FLATPAK_ID} \
+          "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+
     sources:
-      - type: file
-        dest-filename: standard-notes.deb
-        only-arches: [x86_64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.202.9/standard-notes-3.202.9-linux-amd64.deb
-        sha256: 584f1465678683651aa8600bbc77e404e896faa0d67f8546f8bec7fee9570219
+      - type: git
+        url: https://github.com/standardnotes/app.git
+        tag: '@standardnotes/desktop@3.202.9'
+        commit: a854bf8738c2fcac44f1101a438f1820e784e17f
         x-checker-data:
           type: anitya
           project-id: 146681
-          url-template: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%40$version/standard-notes-$version-linux-amd64.deb
+          tag-template: '@standardnotes/desktop@$version'
           stable-only: true
+
+      - generated-sources.json
+
       - type: file
-        dest-filename: standard-notes.deb
-        only-arches: [aarch64]
-        url: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%403.202.9/standard-notes-3.202.9-linux-arm64.deb
-        sha256: 73b39391e513e3e5cf909be5a0c0c47dcfdeb3e81254b52cdd11d2eab5cd4abb
-        x-checker-data:
-          type: anitya
-          project-id: 146681
-          url-template: https://github.com/standardnotes/app/releases/download/%40standardnotes%2Fdesktop%40$version/standard-notes-$version-linux-arm64.deb
-          stable-only: true
+        path: org.standardnotes.standardnotes.desktop
 
   - name: start-script
     buildsystem: simple
@@ -72,6 +118,7 @@ modules:
     sources:
       - type: file
         path: start-standardnotes.sh
+
   - name: metainfo
     buildsystem: simple
     build-commands:
