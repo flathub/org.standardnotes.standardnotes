@@ -1,0 +1,165 @@
+name: Update generated sources
+
+on:
+  pull_request:
+    paths:
+      - org.standardnotes.standardnotes.yml
+  workflow_dispatch:
+
+concurrency:
+  group: regenerate-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          fetch-depth: 2
+
+      - name: Fetch base branch
+        if: github.event_name == 'pull_request'
+        run: git fetch --no-tags origin "${{ github.base_ref }}" --depth=1
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install aiohttp pyyaml tomlkit
+
+      - name: Clone flatpak-builder-tools
+        run: git clone --depth=1 https://github.com/flatpak/flatpak-builder-tools.git _tools
+
+      - name: Read upstream tag from manifest
+        id: upstream
+        run: |
+          TAG=$(python3 - << 'EOF'
+          import re, sys
+          text = open('org.standardnotes.standardnotes.yml').read()
+          m = re.search(r'tag:\s*["\']?(@standardnotes/desktop@[\d.]+)["\']?', text)
+          if not m:
+              sys.exit('ERROR: upstream tag not found in manifest')
+          print(m.group(1))
+          EOF
+          )
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Upstream tag: $TAG"
+
+      - name: Check if tag changed vs base
+        id: need-regen
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "needed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          CURRENT_TAG="${{ steps.upstream.outputs.tag }}"
+          BASE_TAG=$(git show "origin/${{ github.base_ref }}:org.standardnotes.standardnotes.yml" 2>/dev/null | \
+            python3 -c "import re, sys; m = re.search(r'tag:\s*[\"\']?(@standardnotes/desktop@[\d.]+)[\"\']?', sys.stdin.read()); print(m.group(1) if m else '')" 2>/dev/null || echo "")
+
+          echo "Base tag:    $BASE_TAG"
+          echo "Current tag: $CURRENT_TAG"
+
+          if [ -n "$BASE_TAG" ] && [ "$BASE_TAG" = "$CURRENT_TAG" ]; then
+            echo "Tag unchanged – skipping regeneration"
+            echo "needed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Tag changed – running regeneration"
+            echo "needed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Sparse blobless checkout of upstream lockfile
+        if: steps.need-regen.outputs.needed == 'true'
+        run: |
+          git clone \
+            --filter=blob:none \
+            --sparse \
+            --branch "${{ steps.upstream.outputs.tag }}" \
+            https://github.com/standardnotes/app.git \
+            _upstream
+          git -C _upstream sparse-checkout set --no-cone \
+            /yarn.lock \
+            /package.json \
+            /.yarnrc.yml
+
+      - name: Regenerate generated-sources.json
+        if: steps.need-regen.outputs.needed == 'true'
+        run: |
+          PYTHONPATH=_tools/node python3 -m flatpak_node_generator \
+            --electron-node-headers \
+            yarn _upstream/yarn.lock \
+            -o generated-sources.json
+
+      - name: Strip dev browser binaries and test blobs
+        if: steps.need-regen.outputs.needed == 'true'
+        run: |
+          python3 - << 'EOF'
+          import json
+          try:
+              data = json.load(open('generated-sources.json'))
+              data = [e for e in data if not (
+                  e.get('type') == 'archive' and 'cdn.playwright.dev' in e.get('url', '')
+                  or e.get('type') == 'inline' and 'ms-playwright' in e.get('dest', '')
+                  or 'cypress' in e.get('url', '').lower()
+              )]
+              with open('generated-sources.json', 'w') as f:
+                  json.dump(data, f, indent=4)
+                  f.write('\n')
+          except FileNotFoundError:
+              pass
+          EOF
+
+      - name: Update AppStream metainfo with upstream release date
+        if: steps.need-regen.outputs.needed == 'true'
+        run: |
+          python3 - << 'EOF'
+          import subprocess, sys, re
+
+          tag = "${{ steps.upstream.outputs.tag }}"
+          m = re.search(r'@standardnotes/desktop@([\d.]+)', tag)
+          version = m.group(1) if m else tag
+
+          date = subprocess.check_output(
+              ["git", "-C", "_upstream", "log", "-1", "--format=%as"],
+              text=True,
+          ).strip()
+
+          metainfo = "org.standardnotes.standardnotes.metainfo.xml"
+          text = open(metainfo).read()
+
+          if f'version="{version}"' in text:
+              print(f"Version {version} already exists in metainfo.")
+              sys.exit(0)
+
+          new_release = f'\\g<1>\\n    <release version="{version}" date="{date}"/>'
+          updated, count = re.subn(r'([ \t]*<releases[^>]*>)', new_release, text, count=1)
+          if count == 0:
+              print("ERROR: Could not locate <releases> tag in metainfo", file=sys.stderr)
+              sys.exit(1)
+
+          open(metainfo, "w").write(updated)
+          print(f"Added release {version} ({date}) to {metainfo}")
+          EOF
+
+      - name: Commit and push changes to PR branch
+        if: steps.need-regen.outputs.needed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add generated-sources.json org.standardnotes.standardnotes.metainfo.xml
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: regenerate sources for ${{ steps.upstream.outputs.tag }}"
+            git push
+          fi

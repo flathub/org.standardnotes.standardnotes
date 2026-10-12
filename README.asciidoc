@@ -1,38 +1,49 @@
-= Standard Notes
-:uri-standardnotes-home: https://standardnotes.org/
+= Standard Notes Flatpak
 
-{uri-standardnotes-home}[Standard Notes^] is a safe place for your notes, thoughts, and life's work.
+This repository contains the Flatpak packaging for https://standardnotes.com[Standard Notes] (`org.standardnotes.standardnotes`).
 
-== Build, Install and Run Flatpak (locally)
+== Building from Source
 
-Assuming `flatpak`, `flatpak-builder`, and `git` packages are installed, run the following commands:
+Standard Notes is built from upstream Git source tags using Yarn Berry and the Freedesktop Node 22 SDK extension inside an offline sandbox.
 
-[source,shell]
+=== Prerequisites
+
+Install Flatpak and the Flatpak Builder container:
+[source,sh]
 ----
-$ git clone https://github.com/flathub/org.standardnotes.standardnotes.git
-$ cd org.standardnotes.standardnotes/
-$ flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
-$ flatpak-builder build --force-clean --install-deps-from=flathub --install --user org.standardnotes.standardnotes.json
-
-# ...to uninstall the artifact
-$ flatpak uninstall --delete-data --user org.standardnotes.standardnotes
-
-# ...and to clean-up everything
-$ flatpak uninstall --unused --user
-$ rm -rf .flatpak-builder/ build/
-$ flatpak remote-delete --user flathub
+flatpak install flathub org.flatpak.Builder
+flatpak install flathub org.freedesktop.Platform//26.08
+flatpak install flathub org.freedesktop.Sdk//26.08
+flatpak install flathub org.freedesktop.Sdk.Extension.node22//26.08
 ----
 
-== Update Flatpak
+=== Local Build
 
-Make sure `git-2.x`, `yarn-1.16.x`, and `python-3.7.x` packages are installed, then follow the next steps:
+Build the package locally using `org.flatpak.Builder`:
+[source,sh]
+----
+flatpak run org.flatpak.Builder build \
+  --ccache \
+  --disable-updates \
+  --force-clean \
+  --disable-rofiles-fuse \
+  org.standardnotes.standardnotes.yml
+----
 
-1. Open `bootstrap.sh` and update the `TAG` variable accordingly
-2. Run `bootstrap.sh`
-3. Commit and push the generated/updated files
-4. Update manifest and AppStream metadata accordingly
+=== Regenerating Sources Locally
 
-== Roadmap
-:uri-issues-tracker: https://github.com/flathub/org.standardnotes.standardnotes/issues/
+To update `generated-sources.json` against an upstream release lockfile:
+[source,sh]
+----
+# 1. Clone flatpak-builder-tools
+git clone --depth=1 https://github.com/flatpak/flatpak-builder-tools.git src/flatpak-node-generator
 
-See the {uri-issues-tracker}[Issues^] tracker.
+# 2. Run flatpak-node-generator with electron node headers
+flatpak run --filesystem="$(pwd)" \
+  --env=PYTHONPATH="$(pwd)/src/flatpak-node-generator/node" \
+  --command=python3 org.flatpak.Builder \
+  -m flatpak_node_generator \
+  --electron-node-headers \
+  yarn /path/to/upstream/yarn.lock \
+  -o generated-sources.json
+----
