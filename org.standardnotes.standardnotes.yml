@@ -80,6 +80,16 @@ modules:
         cd packages/desktop
         rm -f dist/linux*-unpacked/chrome-sandbox
         cp -r dist/linux*-unpacked ${FLATPAK_DEST}/standardnotes
+
+        # To allow separate locales
+        # https://searchfox.org/mozilla-central/rev/8a4f55bc09ffc5c25dcb4586c51ae4a9fee77b4c/taskcluster/docker/firefox-flatpak/runme.sh#131-133
+        for lang in ${FLATPAK_DEST}/standardnotes/locales/*.pak
+        do
+          locale="$(basename -s .pak $lang)"
+          install -Dm644 -t "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/" "$lang"
+          ln -sf "${FLATPAK_DEST}/share/runtime/locale/${locale%%-*}/$(basename $lang)" "${FLATPAK_DEST}/standardnotes/locales/$(basename $lang)"
+        done
+
         for size in 256 512; do
           if [ -f "app/icon/Icon-${size}x${size}.png" ]; then
             install -Dm644 "app/icon/Icon-${size}x${size}.png" \
