@@ -107,8 +107,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/standardnotes/app.git
-        tag: '@standardnotes/desktop@3.202.10'
-        commit: 8929036bd13900789528f6b00ecedecf1b3c7652
+        tag: '@standardnotes/desktop@3.203.0'
+        commit: f64d5a4a1991d0e5d1c326c6131673ab4b72684c
         x-checker-data:
           type: anitya
           project-id: 146681
