@@ -106,6 +106,7 @@
   </screenshots>
 
   <releases>
+    <release version="3.203.2" date="2026-11-12"/>
     <release version="3.203.0" date="2026-11-02">
       <description></description>
     </release>
